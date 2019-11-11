@@ -10,8 +10,6 @@
 
 #include <iostream>
 
-//typedef websocketpp::client<websocketpp::config::asio_client> client;
-
 const char* MeaningOfLife::Cpp::Logic::Get() const
 {
 	//client cl;
@@ -23,11 +21,25 @@ const char* MeaningOfLife::Cpp::Logic::Get() const
 
 
 	websocket_endpoint endpoint;
-	std::string s = "wss://echo.websocket.org";
+	std::string s = "ws://echo.websocket.org";
 	std::cout << "a" << std::endl;
-	int id = endpoint.connect(s);
 
+	int id = -10;
 	
-	//return id; // Really, what else did you expect?
-	return "kek"; // Really, what else did you expect?
+	//id = endpoint.connect(s);
+	
+	for (int j = 0; j < 10000000; j++) {
+		std::cout << "";
+	}
+	/*
+	connection_metadata::ptr metadata = endpoint.get_metadata(id);
+	if (metadata) {
+		std::cout << *metadata << std::endl;
+	}
+	*/
+	std::cout << id << std::endl;
+	std::string res = "id: " + id;
+	
+	return res.c_str(); // Really, what else did you expect?
+	//return "kek"; // Really, what else did you expect?
 }
