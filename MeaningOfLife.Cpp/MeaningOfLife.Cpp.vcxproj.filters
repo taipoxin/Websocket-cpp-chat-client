@@ -18,9 +18,15 @@
     <ClInclude Include="Logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ws_client_orig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ws_client_orig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

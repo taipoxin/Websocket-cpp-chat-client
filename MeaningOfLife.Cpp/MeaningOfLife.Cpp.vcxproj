@@ -67,9 +67,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="ws_client_orig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="ws_client_orig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="conanfile.txt" />

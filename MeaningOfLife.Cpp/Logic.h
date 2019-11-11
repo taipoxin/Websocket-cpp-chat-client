@@ -11,7 +11,7 @@ namespace MeaningOfLife
 		class __declspec(dllexport) Logic
 		{
 		public:
-			int Get() const; // That's where our code goes
+			const char* Get() const; // That's where our code goes
 		};
 	}
 }

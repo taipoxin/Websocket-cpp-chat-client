@@ -4,6 +4,8 @@
 #include <Windows.h>
 
 using namespace std;
+using namespace System;
+using namespace System::Runtime::InteropServices;
 
 MeaningOfLife::Cpp::CLI::Logic::Logic()
 	: _impl(new Cpp::Logic()) 
@@ -11,9 +13,12 @@ MeaningOfLife::Cpp::CLI::Logic::Logic()
 {
 }
 
-int MeaningOfLife::Cpp::CLI::Logic::Get()
+String^ MeaningOfLife::Cpp::CLI::Logic::Get()
 {
-	return _impl->Get(); // Call native Get
+
+
+	String^ a = char_array_to_string(_impl->Get());
+	return a; // Call native Get
 }
 
 void MeaningOfLife::Cpp::CLI::Logic::Destroy()
@@ -39,6 +44,8 @@ MeaningOfLife::Cpp::CLI::Logic::!Logic()
 	// in case Logic was not used inside a using block.
 	Destroy(); // Clean-up any native resources 
 }
+
+
 
 string ManagedStringToStdString(System::String^ str)
 {
