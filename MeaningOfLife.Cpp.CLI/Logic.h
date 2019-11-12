@@ -11,12 +11,8 @@ namespace MeaningOfLife
 		namespace CLI
 		{
 			using namespace System;
-			using namespace System::Runtime::InteropServices;
-			static String^ char_array_to_string(const char* str)
-			{
-				System::String^ res = Marshal::PtrToStringAnsi((IntPtr)(char *)str);
-				return res;
-			}
+
+
 			// Next is the managed wrapper of Logic:
 			public ref class Logic
 			{
@@ -30,7 +26,7 @@ namespace MeaningOfLife
 				~Logic();
 				!Logic();
 
-				System::String^ Get();
+				String^ Get(String^ text);
 
 				void Destroy();
 

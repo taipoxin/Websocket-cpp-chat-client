@@ -33,7 +33,10 @@ namespace MeaningOfLife.WPF
 
             using (var wrapper = new Logic())
             {
-                MessageBox.Show("The answer is " + wrapper.Get());
+                string aa = "Дарова с++";
+                string res = wrapper.Get(aa);
+                Console.WriteLine(res);
+                MessageBox.Show("The answer is " + res);
             }
             
             /*
