@@ -26,6 +26,11 @@ string ManagedStringToStdString(System::String^ str)
 	return nativeString;
 }
 
+System::String^ StlWStringToString(std::wstring const& os) {
+	String^ str = gcnew String(os.c_str());
+	//String^ str = gcnew String("");
+	return str;
+}
 
 MeaningOfLife::Cpp::CLI::Logic::Logic()
 	: _impl(new Cpp::Logic()) 
@@ -36,7 +41,7 @@ MeaningOfLife::Cpp::CLI::Logic::Logic()
 String^ MeaningOfLife::Cpp::CLI::Logic::Get(String^ text)
 {
 	const char* mText = string_to_char_array(text);
-	String^ a = char_array_to_string(_impl->Get(mText));
+	String^ a = StlWStringToString(_impl->Get(mText).c_str());
 	return a;
 }
 

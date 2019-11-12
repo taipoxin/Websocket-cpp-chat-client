@@ -4,9 +4,12 @@
 #include "Logic.h"
 
 #include "ws_client_orig.h"
-#include "boost/lexical_cast.hpp"
 
 #include <iostream>
+
+#include <locale>
+#include <codecvt>
+#include <string>
 
 
 using namespace std;
@@ -53,7 +56,14 @@ const char* concat_chars(const char* one, const char* two)
 	return concatString;
 }
 
-const char* MeaningOfLife::Cpp::Logic::Get(const char* text) const
+int StringToWString(std::wstring &ws, const std::string &s)
+{
+	std::wstring wsTmp(s.begin(), s.end());
+	ws = wsTmp;
+	return 0;
+}
+
+std::wstring MeaningOfLife::Cpp::Logic::Get(const char* text) const
 {
 	std::cout << text << endl;
 
@@ -80,6 +90,6 @@ const char* MeaningOfLife::Cpp::Logic::Get(const char* text) const
 	
 
 	cout << result << endl;
-
-	return result;
+	wstring res = L"Привет дорогой друг" + to_wstring(id);
+	return res;
 }
