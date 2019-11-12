@@ -9,8 +9,7 @@ using namespace System::Runtime::InteropServices;
 
 String^ char_array_to_string(const char* str)
 {
-	String^ res = Marshal::PtrToStringAnsi((IntPtr)(char *)str);
-	return res;
+	return Marshal::PtrToStringAnsi((IntPtr)(char *)str);
 }
 
 const char* string_to_char_array(String^ str) 
@@ -36,24 +35,9 @@ MeaningOfLife::Cpp::CLI::Logic::Logic()
 
 String^ MeaningOfLife::Cpp::CLI::Logic::Get(String^ text)
 {
-	
 	const char* mText = string_to_char_array(text);
 	String^ a = char_array_to_string(_impl->Get(mText));
-	//String^ a = gcnew String(_impl->Get());
-	
-	
-	/*
-	const wchar_t* w = _impl->Get();
-	System::Console::WriteLine(w);
-	wchar_t* wc = const_cast<wchar_t*>(_impl->Get());
-	System::Console::WriteLine(wc);
-	//std::wcout << wc;
-	String^ a = Marshal::PtrToStringUni((IntPtr)wc);
-	System::Console::WriteLine(a);
-	//return gcnew String(_impl->Get());
-	*/
 	return a;
-	//return a; // Call native Get
 }
 
 void MeaningOfLife::Cpp::CLI::Logic::Destroy()

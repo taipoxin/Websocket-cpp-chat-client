@@ -38,27 +38,6 @@ namespace MeaningOfLife.WPF
                 Console.WriteLine(res);
                 MessageBox.Show("The answer is " + res);
             }
-            
-            /*
-            var fileOpenDialog = new OpenFileDialog
-            {
-                CheckFileExists = true,
-                Filter = "Native Library|MeaningOfLife.Cpp.dll",
-                InitialDirectory = Environment.CurrentDirectory
-            };
-            var result = fileOpenDialog.ShowDialog(this);
-            
-            if (result.HasValue && result.Value)
-            {
-                Logic.InitializeLibrary(fileOpenDialog.FileName);
-
-                using (var wrapper = new Logic())
-                {
-                    MessageBox.Show("The answer is " + wrapper.Get());
-                }
-            }
-            */
-            
         }
     }
 }
