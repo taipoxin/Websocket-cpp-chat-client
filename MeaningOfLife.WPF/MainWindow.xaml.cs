@@ -28,7 +28,7 @@ namespace MeaningOfLife.WPF
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            var pathLib = "E:\\VS_TEST\\CsToCpp\\Debug\\MeaningOfLife.Cpp.dll";
+            var pathLib = "..\\..\\..\\..\\Debug\\MeaningOfLife.Cpp.dll";
             Logic.InitializeLibrary(pathLib);
 
             using (var wrapper = new Logic())

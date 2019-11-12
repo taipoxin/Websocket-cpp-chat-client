@@ -7,10 +7,6 @@ using namespace std;
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-String^ char_array_to_string(const char* str)
-{
-	return Marshal::PtrToStringAnsi((IntPtr)(char *)str);
-}
 
 const char* string_to_char_array(String^ str) 
 {
@@ -26,9 +22,8 @@ string ManagedStringToStdString(System::String^ str)
 	return nativeString;
 }
 
-System::String^ StlWStringToString(std::wstring const& os) {
+System::String^ wstring_to_sys_string(std::wstring const& os) {
 	String^ str = gcnew String(os.c_str());
-	//String^ str = gcnew String("");
 	return str;
 }
 
@@ -41,7 +36,7 @@ MeaningOfLife::Cpp::CLI::Logic::Logic()
 String^ MeaningOfLife::Cpp::CLI::Logic::Get(String^ text)
 {
 	const char* mText = string_to_char_array(text);
-	String^ a = StlWStringToString(_impl->Get(mText).c_str());
+	String^ a = wstring_to_sys_string(_impl->Get(mText).c_str());
 	return a;
 }
 
