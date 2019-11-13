@@ -117,7 +117,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MeaningOfLife.Cpp.CLI\MeaningOfLife.Cpp.CLI.vcxproj">
       <Project>{146f3245-7f2d-416f-9978-0fa733ad2f2f}</Project>
-      <Name>MeaningOfLife.Cpp.CLI</Name>
+      <Name>WS_Chat.Wrapper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
