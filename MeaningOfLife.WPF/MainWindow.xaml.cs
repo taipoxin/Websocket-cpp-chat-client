@@ -23,14 +23,14 @@ namespace MeaningOfLife.WPF
         public MainWindow()
         {
             InitializeComponent();
+            var pathLib = "MeaningOfLife.Cpp.dll";
+            Logic.InitializeLibrary(pathLib);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-            var pathLib = "MeaningOfLife.Cpp.dll";
-            Logic.InitializeLibrary(pathLib);
-
+            FileLogger logger = new FileLogger("a.txt");
+            logger.log("ГАСИ КАмпутАР");
             using (var wrapper = new Logic())
             {
                 string aa = "Дарова с++";
@@ -38,6 +38,8 @@ namespace MeaningOfLife.WPF
                 Console.WriteLine(res);
                 MessageBox.Show("The answer is " + res);
             }
+
+            
         }
     }
 }

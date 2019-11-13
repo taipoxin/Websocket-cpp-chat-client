@@ -13,10 +13,9 @@ namespace MeaningOfLife
 		class __declspec(dllexport) FileLogger
 		{
 		public:
-      FileLogger();
-      void log(const char* s, bool toEnd);
-      void log(const char* s);
-      void logg(const char* s, bool toEnd);
+      FileLogger(const char* file);
+      void log(const char* s, bool withTime = true);
+      void logg(const char* s, bool withTime = true, const char* sep = "");
 
     private:
       const char* file;

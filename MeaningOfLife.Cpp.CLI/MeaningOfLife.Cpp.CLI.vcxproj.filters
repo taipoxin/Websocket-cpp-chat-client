@@ -21,12 +21,18 @@
     <ClInclude Include="CastUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileLogger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CastUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
