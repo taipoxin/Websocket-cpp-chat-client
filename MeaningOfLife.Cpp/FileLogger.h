@@ -1,24 +1,20 @@
 #pragma once
-
 #include <string>
+
+using namespace std;
 
 namespace MeaningOfLife
 {	
 	namespace Cpp
 	{
-	using namespace std;
-		// This is our native implementation
-		// It's marked with __declspec(dllexport) 
-		// to be visible from outside the DLL boundaries
 		class __declspec(dllexport) FileLogger
 		{
 		public:
-      FileLogger(const char* file);
-      void log(const char* s, bool withTime = true);
-      void logg(const char* s, bool withTime = true, const char* sep = "");
-
-    private:
-      const char* file;
+			FileLogger(string file);
+			void log(string s, bool withTime = true);
+			void logg(string s, bool withTime = true, string sep = "");
+		private:
+			string file;
 		};
 	}
 }

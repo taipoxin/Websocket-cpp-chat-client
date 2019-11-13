@@ -8,12 +8,12 @@
 
 using namespace std;
 
-MeaningOfLife::Cpp::FileLogger::FileLogger(const char* file)
+MeaningOfLife::Cpp::FileLogger::FileLogger(string file)
 {
 	this->file = file;
 }
 
-void MeaningOfLife::Cpp::FileLogger::logg(const char* s, bool withTime, const char* sep) {
+void MeaningOfLife::Cpp::FileLogger::logg(string s, bool withTime, string sep) {
 	string ss = s;
 	if (withTime) {
 		auto end = std::chrono::system_clock::now();
@@ -29,7 +29,7 @@ void MeaningOfLife::Cpp::FileLogger::logg(const char* s, bool withTime, const ch
 }
 
 
-void MeaningOfLife::Cpp::FileLogger::log(const char* s, bool withTime) {
+void MeaningOfLife::Cpp::FileLogger::log(string s, bool withTime) {
   logg(s, withTime, "\n");
 }
 
