@@ -74,9 +74,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CastUtils.h" />
     <ClInclude Include="Logic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CastUtils.cpp" />
     <ClCompile Include="Logic.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

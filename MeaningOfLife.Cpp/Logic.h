@@ -14,7 +14,7 @@ namespace MeaningOfLife
 		class __declspec(dllexport) Logic
 		{
 		public:
-			std::wstring Get(const char* text) const; // That's where our code goes
+			std::wstring Get(const char* text) const;
 		};
 	}
 }

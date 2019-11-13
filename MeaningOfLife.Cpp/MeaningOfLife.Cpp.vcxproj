@@ -66,10 +66,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CastCoreUtils.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="ws_client_orig.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CastCoreUtils.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="ws_client_orig.cpp" />
   </ItemGroup>
