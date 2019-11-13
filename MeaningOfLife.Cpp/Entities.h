@@ -2,7 +2,7 @@
 #pragma once
 
 #include <string>
-#include<vector>
+#include <vector>
 
 using namespace std;
 
@@ -10,65 +10,63 @@ namespace MeaningOfLife
 {	
 	namespace Cpp
 	{
-		// This is our native implementation
-		// It's marked with __declspec(dllexport) 
-		// to be visible from outside the DLL boundaries
-		class __declspec(dllexport) Entities
-		{
+
+	class __declspec(dllexport) Entities
+	{
 
       class MessageEntity {
         public:
           const int Id() const { return _Id; } 
           void Id(const int id) { _Id = id; } 
 
-          const char* from() const { return _from; } 
-          void from(const char* from) { _from = from; } 
+          string from() const { return _from; } 
+          void from(string from) { _from = from; } 
 
-          const char* time() const { return _time; }
-          void time(const char* time) { _time = time; } 
+          string time() const { return _time; }
+          void time(string time) { _time = time; } 
         private:
           int _Id;
-          const char* _from;
-          const char* _message;
-          const char* _time;
+          string _from;
+          string _message;
+          string _time;
       };
 
       class AddUser {
         public:
           AddUser();
-          AddUser(const char* sender, const char* user, 
-            const char* channel, const char* fullname, bool success, const char* type);
+          AddUser(string sender, string user, 
+            string channel, string fullname, bool success, string type);
           
-          const char* sender;
-          const char* user;
-          const char* channel;
-          const char* fullname;
+          string sender;
+          string user;
+          string channel;
+          string fullname;
           bool success;
-          const char* type;
+          string type;
       };
 
 
       class User {
         public:
           User();
-          User(const char* login, const char* type);
+          User(string login, string type);
           
-          const char* login;
-          const char* type;
+          string login;
+          string type;
       };
 
 
       class GetChannelUsers {
         public:
           GetChannelUsers();
-          GetChannelUsers(const char* sender, const char* channel,
-            vector<User> users, const char* type);
+          GetChannelUsers(string sender, string channel,
+            vector<User> users, string type);
           
-          const char* sender;
-          const char* channel;
+          string sender;
+          string channel;
 		  vector<User> users;
 		  // get_channel_users
-          const char* type;
+          string type;
       };
 
 	  // universal (for req(w/o users) and resp)
@@ -76,12 +74,12 @@ namespace MeaningOfLife
 	  {
 	  public:
 		  GetOnlineUsers();
-		  GetOnlineUsers(const char* sender, vector<const char*> users, const char* type);
+		  GetOnlineUsers(string sender, vector<string> users, string type);
 
-		  const char* sender;
-		  vector<const char*> users;
+		  string sender;
+		  vector<string> users;
 		  // "get_online_users"
-		  const char* type;
+		  string type;
 	  };
 
 
@@ -89,7 +87,7 @@ namespace MeaningOfLife
 	  class CommonResponse
 	  {
 	  public:
-		  const char* type;
+		  string type;
 	  };
 
 
@@ -97,25 +95,25 @@ namespace MeaningOfLife
 	  {
 	  public:
 		  NewChannelRequest();
-		  NewChannelRequest(const char* name, const char* fullname, 
-			  const char* admin, const char* type);
+		  NewChannelRequest(string name, string fullname, 
+			  string admin, string type);
 
-		  const char* name;
-		  const char* fullname;
-		  const char* admin;
-		  const char* type;
+		  string name;
+		  string fullname;
+		  string admin;
+		  string type;
 	  };
 
 	  class NewChannelResponse
 	  {
 	  public:
 		  NewChannelResponse();
-		  NewChannelResponse(const char* name, const char* fullname, 
-			  const char* admin, const char* type, bool success);
-		  const char* name;
-		  const char* fullname;
-		  const char* admin;
-		  const char* type;
+		  NewChannelResponse(string name, string fullname, 
+			  string admin, string type, bool success);
+		  string name;
+		  string fullname;
+		  string admin;
+		  string type;
 		  bool success;
 	  };
 
@@ -123,14 +121,14 @@ namespace MeaningOfLife
 	  {
 		  GetChannelMessagesReq();
 
-		  GetChannelMessagesReq(const char* from, const char* channel, 
-			  long time, const char* type);
+		  GetChannelMessagesReq(string from, string channel, 
+			  long time, string type);
 
-		  const char* from;
-		  const char* channel;
+		  string from;
+		  string channel;
 		  long time;
 		  // "get_channel_messages"
-		  const char* type;
+		  string type;
 
 	  };
 
@@ -140,12 +138,12 @@ namespace MeaningOfLife
 	  public:
 		  ChannelRequest();
 
-		  ChannelRequest(const char* type, const char* name, const char* from);
+		  ChannelRequest(string type, string name, string from);
 
-		  const char* type;
+		  string type;
 		  // if name == '*' return all channels
-		  const char* name;
-		  const char* from;
+		  string name;
+		  string from;
 	  };
 
 	  class RegRequest
@@ -153,12 +151,12 @@ namespace MeaningOfLife
 	  public:
 		  RegRequest();
 
-		  RegRequest(const char* type, const char* user, const char* email, const char* password);
+		  RegRequest(string type, string user, string email, string password);
 
-		  const char* type;
-		  const char* user;
-		  const char* email;
-		  const char* password;
+		  string type;
+		  string user;
+		  string email;
+		  string password;
 	  };
 
 	  class RegResponse
@@ -166,9 +164,9 @@ namespace MeaningOfLife
 	  public:
 		  RegResponse();
 
-		  RegResponse(const char* type, bool success);
+		  RegResponse(string type, bool success);
 
-		  const char* type;
+		  string type;
 		  bool success;
 	  };
 
@@ -177,22 +175,22 @@ namespace MeaningOfLife
 	  public:
 		  AuthResponse();
 
-		  AuthResponse(const char* type, bool success, vector<const char*> online);
+		  AuthResponse(string type, bool success, vector<string> online);
 
-		  const char* type;
+		  string type;
 		  bool success;
-		  vector<const char*> online;
+		  vector<string> online;
 	  };
 
 	  class AuthRequest
 	  {
 	  public:
 		  AuthRequest();
-		  AuthRequest(const char* type, const char* user, const char* password);
+		  AuthRequest(string type, string user, string password);
 
-		  const char* type;
-		  const char* user;
-		  const char* password;
+		  string type;
+		  string user;
+		  string password;
 	  };
 
 	  class MessageResponse
@@ -200,18 +198,18 @@ namespace MeaningOfLife
 	  public:
 		  MessageResponse();
 
-		  MessageResponse(const char* type, const char* message, 
-			  const char* from, long time, const char* channel);
+		  MessageResponse(string type, string message, 
+			  string from, long time, string channel);
 
-		  const char* from;
-		  const char* message;
-		  const char* channel;
+		  string from;
+		  string message;
+		  string channel;
 		  // ms from 1970
 		  long time;
-		  const char* type;
+		  string type;
 
 	  };
 
-		};
+	};
 	}
 }

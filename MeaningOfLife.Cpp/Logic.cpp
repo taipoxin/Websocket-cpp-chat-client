@@ -9,22 +9,22 @@
 using namespace std;
 
 
-std::wstring MeaningOfLife::Cpp::Logic::Get(const char* text) const
+wstring MeaningOfLife::Cpp::Logic::Get(string text) const
 {
-	std::cout << text << endl;
+	cout << text << endl;
 
 	websocket_endpoint endpoint;
-	std::string s = "ws://echo.websocket.org";
-	std::cout << "a" << std::endl;
+	string s = "ws://echo.websocket.org";
+	cout << "a" << endl;
 
 	int id = -10;
 	id = endpoint.connect(s);
 	for (int j = 0; j < 10000000; j++) {
-		std::cout << "";
+		cout << "";
 	}
 	connection_metadata::ptr metadata = endpoint.get_metadata(id);
 	if (metadata) {
-		std::cout << *metadata << std::endl;
+		cout << *metadata << endl;
 	}
 
 	string two = "Русские вперед " + metadata.get()->get_status();

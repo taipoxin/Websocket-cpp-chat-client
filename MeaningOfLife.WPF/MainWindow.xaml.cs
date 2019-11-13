@@ -29,8 +29,8 @@ namespace MeaningOfLife.WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileLogger logger = new FileLogger("a.txt");
-            logger.log("ГАСИ КАмпутАР");
+            FileLogger logger = new FileLogger("logs.txt");
+            logger.log("test лог");
             using (var wrapper = new Logic())
             {
                 string aa = "Дарова с++";

@@ -16,7 +16,7 @@ MeaningOfLife::Cpp::CLI::Logic::Logic()
 String^ MeaningOfLife::Cpp::CLI::Logic::Get(String^ text)
 {
 	const char* mText = string_to_char_array(text);
-	String^ a = wstring_to_sys_string(_impl->Get(mText).c_str());
+	String^ a = wstring_to_sys_string(_impl->Get(mText));
 	return a;
 }
 
