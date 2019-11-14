@@ -14,9 +14,9 @@ namespace MeaningOfLife
 		class __declspec(dllexport) Config
 		{
 		public:
-			static inline const char* wsSource = "ws://192.168.137.97:9000";
-			static inline const char* userName = "";
-			static inline const char* logFileName = "logs.txt";
+			static string wsSource;
+			static string userName;
+			static string logFileName;
 		};
 	}
 }

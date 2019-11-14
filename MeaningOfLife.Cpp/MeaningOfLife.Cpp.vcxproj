@@ -71,10 +71,13 @@
     <ClInclude Include="Entities.h" />
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="WsController.h" />
     <ClInclude Include="ws_client_orig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />

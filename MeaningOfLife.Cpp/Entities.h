@@ -13,7 +13,7 @@ namespace MeaningOfLife
 
 	class __declspec(dllexport) Entities
 	{
-
+	public:
       class MessageEntity {
         public:
           const int Id() const { return _Id; } 
