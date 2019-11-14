@@ -108,7 +108,7 @@
     </Compile>
     <Compile Include="Utils.cs" />
     <Compile Include="WsController.cs" />
-    <Page Include="MainWindow.xaml">
+    <Page Include="MainWindowClear.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -123,11 +123,11 @@
     <Compile Include="GenericsWPF.cs" />
     <Compile Include="GlobalChannel.cs" />
     <Compile Include="GlobalMessages.cs" />
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MainWindowClear.xaml.cs">
+      <DependentUpon>MainWindowClear.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MainWindowOld.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -141,8 +141,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainWindowOld.xaml.cs">
-      <DependentUpon>MainWindowOld.xaml</DependentUpon>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MessageBean.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
