@@ -46,7 +46,6 @@ using namespace std;
 
     void connection_metadata::on_open(client * c, websocketpp::connection_hdl hdl) {
         m_status = "Open";
-		cout << "Opened" << endl;
         client::connection_ptr con = c->get_con_from_hdl(hdl);
         m_server = con->get_response_header("Server");
 		cout << "End opened" << endl;
@@ -54,7 +53,6 @@ using namespace std;
 
     void connection_metadata::on_fail(client * c, websocketpp::connection_hdl hdl) {
         m_status = "Failed";
-		cout << "Failed status" << endl;
         client::connection_ptr con = c->get_con_from_hdl(hdl);
 		cout << con->get_ec().message() << endl;
 
@@ -64,7 +62,6 @@ using namespace std;
     
     void connection_metadata::on_close(client * c, websocketpp::connection_hdl hdl) {
         m_status = "Closed";
-		cout << "Closed status" << endl;
         client::connection_ptr con = c->get_con_from_hdl(hdl);
         std::stringstream s;
         s << "close code: " << con->get_remote_close_code() << " (" 
@@ -115,7 +112,6 @@ using namespace std;
 
 	websocket_endpoint::~websocket_endpoint() {
         m_endpoint.stop_perpetual();
-		cout << "Destructor" << endl;
         
         for (con_list::const_iterator it = m_connection_list.begin(); it != m_connection_list.end(); ++it) {
             if (it->second->get_status() != "Open") {
@@ -178,20 +174,7 @@ using namespace std;
         ));
 
 		
-		connection_metadata::ptr metadata = get_metadata(new_id);
-		if (metadata) {
-			std::cout << *metadata << std::endl;
-		}
-
-		
         m_endpoint.connect(con);
-
-		cout << "Done connection" << endl;
-
-		metadata = get_metadata(new_id);
-		if (metadata) {
-			std::cout << *metadata << std::endl;
-		}
 
         return new_id;
     }
