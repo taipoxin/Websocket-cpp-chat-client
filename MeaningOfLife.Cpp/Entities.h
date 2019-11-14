@@ -20,7 +20,10 @@ namespace MeaningOfLife
           void Id(const int id) { _Id = id; } 
 
           string from() const { return _from; } 
-          void from(string from) { _from = from; } 
+          void from(string from) { _from = from; }  
+		  
+		  string message() const { return _message; } 
+          void message(string message) { _message = message; }
 
           string time() const { return _time; }
           void time(string time) { _time = time; } 

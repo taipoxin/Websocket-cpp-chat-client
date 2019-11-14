@@ -5,6 +5,7 @@
 #include <vector>
 #include "FileLogger.h"
 #include "Entities.h"
+#include <boost/any.hpp>
 
 using namespace std;
 
@@ -25,8 +26,8 @@ namespace MeaningOfLife
 		private:
 			// core low level ws client
 			WebSocket ws;
-			//  = new FileLogger(Config.logFileName)
-			FileLogger l;
+			// change to static
+			static FileLogger l;
 
 			// links for view classes
 			Signin signinWindow;
@@ -42,7 +43,7 @@ namespace MeaningOfLife
 			WebSocket initWebSocket();
 
 			// dynamic -> string
-			vector<Entities::MessageEntity> listDynamicToMessageEntities(vector<string> ll);
+			vector<Entities::MessageEntity> listDynamicToMessageEntities(vector<boost::any> ll);
 
 			void tryToConnect(WebSocket ws);
 

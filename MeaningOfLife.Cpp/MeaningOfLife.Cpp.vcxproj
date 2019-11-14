@@ -81,6 +81,8 @@
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WsController.cpp" />
     <ClCompile Include="ws_client_orig.cpp" />
   </ItemGroup>
   <ItemGroup>

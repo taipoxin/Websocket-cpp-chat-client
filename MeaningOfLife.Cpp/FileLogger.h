@@ -10,6 +10,7 @@ namespace MeaningOfLife
 		class __declspec(dllexport) FileLogger
 		{
 		public:
+			FileLogger();
 			FileLogger(string file);
 			void log(string s, bool withTime = true);
 			void logg(string s, bool withTime = true, string sep = "");

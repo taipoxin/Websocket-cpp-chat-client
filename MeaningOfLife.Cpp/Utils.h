@@ -5,6 +5,7 @@
 #include "Config.h"
 #include "FileLogger.h"
 #include "WsController.h"
+#include <boost/any.hpp>
 
 using namespace std;
 
@@ -20,8 +21,8 @@ namespace MeaningOfLife
 		public:
 			// return true if successfully sended
 
-			// object -> string
-			static bool sendRequest(string obj, WsController c);
+			// object -> boost
+			static bool sendRequest(boost::any const& obj, WsController c);
 
 			static void sendAddUserRequest(string user, string channel, string fullname, WsController c);
 			static void sendGetOnlineUsersRequest(WsController c);
@@ -51,10 +52,10 @@ namespace MeaningOfLife
 			/// <param name="actual">size of app in pixels</param>
 			static double getCenter(double resolution, double actual);
 
-			// dynamic -> string
-			static Entities::MessageResponse dynamicToMessageResponse(string obj);
+			// dynamic -> boost:any
+			static Entities::MessageResponse dynamicToMessageResponse(boost::any const& obj);
 
-			static Entities::NewChannelResponse dynamicToNewChannelResponse(string obj);
+			static Entities::NewChannelResponse dynamicToNewChannelResponse(boost::any const& obj);
 
 		};
 	}
