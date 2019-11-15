@@ -1,9 +1,6 @@
  [requires]
- OpenSSL/1.1.1c@conan/stable
  jsonformoderncpp/3.7.2@vthiery/stable
  boost/1.69.0@conan/stable
- websocketpp/0.8.1@bincrafters/stable
- boost_beast/1.69.0@bincrafters/stable
 
  [generators]
  visual_studio

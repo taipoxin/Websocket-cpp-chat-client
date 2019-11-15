@@ -73,7 +73,6 @@
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WsController.h" />
-    <ClInclude Include="ws_client_orig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
@@ -83,7 +82,6 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WsController.cpp" />
-    <ClCompile Include="ws_client_orig.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="conanfile.txt" />

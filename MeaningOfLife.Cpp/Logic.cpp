@@ -7,10 +7,8 @@
 #include <iostream>
 #include <string>
 
-
 #include <iostream>
 #include "Logic.h"
-#include "ws_client_orig.h"
 #include "CastCoreUtils.h"
 #include <stdio.h>
 #include <time.h>
@@ -23,23 +21,6 @@ using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 using namespace std;
 
-int connectWS(websocket_endpoint &endpoint, string s, double timeoutS) {
-	int id = -10;
-	clock_t this_time = clock();
-	clock_t last_time = this_time;
-	id = endpoint.connect(s);
-	connection_metadata::ptr metadata = endpoint.get_metadata(id);
-	
-	while ((metadata.get()->get_status() != "Open") || (timeoutS * CLOCKS_PER_SEC > (double)(this_time - last_time))) {
-		this_time = clock();
-	}
-	if (timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time)) {
-		cout << "Connection Timeout" << endl;
-	}
-	return id;
-}
-
-
 // Sends a WebSocket message and prints the response
 int test(string host, string port, string text)
 {
@@ -47,35 +28,15 @@ int test(string host, string port, string text)
     {
         // The io_context is required for all I/O
         net::io_context ioc;
-
         // These objects perform our I/O
         tcp::resolver resolver{ioc};
         websocket::stream<tcp::socket> ws{ioc};
-
         // Look up the domain name
         auto const results = resolver.resolve(host, port);
-
         // Make the connection on the IP address we get from a lookup
         net::connect(ws.next_layer(), results.begin(), results.end());
 
-        // Set a decorator to change the User-Agent of the handshake
-		/*
-        ws.set_option(websocket::stream_base::decorator(
-            [](websocket::request_type& req)
-            {
-                req.set(http::field::user_agent,
-                    std::string(BOOST_BEAST_VERSION_STRING) +
-                        " websocket-client-coro");
-            }));
-
-        // Perform the websocket handshake
-        ws.handshake(host, "/");
-		*/
-
-		ws.handshake_ex(
-			host,
-			"/",
-			[](websocket::request_type& req)
+		ws.handshake_ex(host, "/", [](websocket::request_type& req)
 		{
 			req.set(http::field::user_agent,
 				std::string(BOOST_BEAST_VERSION_STRING) +
@@ -88,7 +49,6 @@ int test(string host, string port, string text)
 
         // This buffer will hold the incoming message
         beast::multi_buffer buffer;
-		//beast::websocket::opcode op;
 
         // Read a message into our buffer
         ws.read(buffer);
@@ -97,7 +57,6 @@ int test(string host, string port, string text)
         ws.close(websocket::close_code::normal);
 
         // If we get here then the connection is closed gracefully
-
         // The make_printable() function helps print a ConstBufferSequence
         std::cout << boost::beast::buffers(buffer.data()) << std::endl;
     }
@@ -113,7 +72,7 @@ wstring MeaningOfLife::Cpp::Logic::Get(string text) const
 {
 	cout << text << endl;
 
-	test("echo.websocket.org", "80", "Дарова ебать");
+	test("echo.websocket.org", "80", "Привет из Беларуси");
 
 	int id = -10;
 	string two = "Дароу";
