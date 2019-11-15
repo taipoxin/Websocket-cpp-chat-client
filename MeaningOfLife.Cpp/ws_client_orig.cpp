@@ -204,7 +204,7 @@ using namespace std;
             return;
         }
         
-        m_endpoint.send(metadata_it->second->get_hdl(), message, websocketpp::frame::opcode::text, ec);
+        m_endpoint.send(metadata_it->second->get_hdl(), message, websocketpp::frame::opcode::BINARY, ec);
         if (ec) {
             std::cout << "> Error sending message: " << ec.message() << std::endl;
             return;
