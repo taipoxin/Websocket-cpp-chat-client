@@ -83,10 +83,12 @@ int test(string host, string port, string text)
 		});
 
         // Send the message
+		ws.binary(true);
         ws.write(boost::asio::buffer(std::string(text)));
 
         // This buffer will hold the incoming message
         beast::multi_buffer buffer;
+		//beast::websocket::opcode op;
 
         // Read a message into our buffer
         ws.read(buffer);
