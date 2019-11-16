@@ -74,9 +74,8 @@
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Utils.h" />
-    <ClInclude Include="WebsocketCore.h" />
     <ClInclude Include="WsController.h" />
-    <ClInclude Include="WS_async_example.h" />
+    <ClInclude Include="WS_async.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
@@ -85,9 +84,8 @@
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="WebsocketCore.cpp" />
     <ClCompile Include="WsController.cpp" />
-    <ClCompile Include="WS_async_example.cpp" />
+    <ClCompile Include="WS_async.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="conanfile.txt" />

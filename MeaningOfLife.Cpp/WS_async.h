@@ -20,7 +20,7 @@ namespace MeaningOfLife
 	{
 
 		// Sends a WebSocket message and prints the response
-		class __declspec(dllexport) session : public std::enable_shared_from_this<session>
+		class __declspec(dllexport) WS_async : public std::enable_shared_from_this<WS_async>
 		{
 
 			tcp::resolver resolver_;
@@ -32,7 +32,7 @@ namespace MeaningOfLife
 		public:
 			// Resolver and socket require an io_context
 			explicit
-				session(boost::asio::io_context& ioc)
+				WS_async(boost::asio::io_context& ioc)
 				: resolver_(ioc)
 				, ws_(ioc) {}
 
@@ -43,29 +43,23 @@ namespace MeaningOfLife
 					char const* port,
 					char const* text);
 
-			void
-				on_resolve(
+			void on_resolve(
 					boost::system::error_code ec,
 					tcp::resolver::results_type results);
 
-			void
-				on_connect(boost::system::error_code ec);
+			void on_connect(boost::system::error_code ec);
 
-			void
-				on_handshake(boost::system::error_code ec);
+			void on_handshake(boost::system::error_code ec);
 
-			void
-				on_write(
+			void on_write(
 					boost::system::error_code ec,
 					std::size_t bytes_transferred);
 
-			void
-				on_read(
+			void on_read(
 					boost::system::error_code ec,
 					std::size_t bytes_transferred);
 
-			void
-				on_close(boost::system::error_code ec);
+			void on_close(boost::system::error_code ec);
 		};
 	}
 }
@@ -93,7 +87,7 @@ int main(int argc, char** argv)
 	boost::asio::io_context ioc;
 
 	// Launch the asynchronous operation
-	std::make_shared<session>(ioc)->run(host, port, text);
+	std::make_shared<WS_async>(ioc)->run(host, port, text);
 
 	// Run the I/O service. The call will return when
 	// the socket is closed.

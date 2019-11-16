@@ -1,4 +1,4 @@
-#include "WS_async_example.h"
+#include "WS_async.h"
 
 using namespace MeaningOfLife::Cpp;
 
@@ -12,7 +12,7 @@ fail(boost::system::error_code ec, char const* what)
 
 // Start the asynchronous operation
 void
-	session::run(
+	WS_async::run(
 		char const* host,
 		char const* port,
 		char const* text)
@@ -26,14 +26,14 @@ void
 		host,
 		port,
 		std::bind(
-			&session::on_resolve,
+			&WS_async::on_resolve,
 			shared_from_this(),
 			std::placeholders::_1,
 			std::placeholders::_2));
 }
 
 void
-	session::on_resolve(
+	WS_async::on_resolve(
 		boost::system::error_code ec,
 		tcp::resolver::results_type results)
 {
@@ -46,13 +46,13 @@ void
 		results.begin(),
 		results.end(),
 		std::bind(
-			&session::on_connect,
+			&WS_async::on_connect,
 			shared_from_this(),
 			std::placeholders::_1));
 }
 
 void
-	session::on_connect(boost::system::error_code ec)
+	WS_async::on_connect(boost::system::error_code ec)
 {
 	if (ec)
 		return fail(ec, "connect");
@@ -60,13 +60,13 @@ void
 	// Perform the websocket handshake
 	ws_.async_handshake(host_, "/",
 		std::bind(
-			&session::on_handshake,
+			&WS_async::on_handshake,
 			shared_from_this(),
 			std::placeholders::_1));
 }
 
 void
-	session::on_handshake(boost::system::error_code ec)
+	WS_async::on_handshake(boost::system::error_code ec)
 {
 	if (ec)
 		return fail(ec, "handshake");
@@ -76,14 +76,14 @@ void
 	ws_.async_write(
 		boost::asio::buffer(text_),
 		std::bind(
-			&session::on_write,
+			&WS_async::on_write,
 			shared_from_this(),
 			std::placeholders::_1,
 			std::placeholders::_2));
 }
 
 void
-	session::on_write(
+	WS_async::on_write(
 		boost::system::error_code ec,
 		std::size_t bytes_transferred)
 {
@@ -96,14 +96,14 @@ void
 	ws_.async_read(
 		buffer_,
 		std::bind(
-			&session::on_read,
+			&WS_async::on_read,
 			shared_from_this(),
 			std::placeholders::_1,
 			std::placeholders::_2));
 }
 
 void
-	session::on_read(
+	WS_async::on_read(
 		boost::system::error_code ec,
 		std::size_t bytes_transferred)
 {
@@ -115,13 +115,13 @@ void
 	// Close the WebSocket connection
 	ws_.async_close(websocket::close_code::normal,
 		std::bind(
-			&session::on_close,
+			&WS_async::on_close,
 			shared_from_this(),
 			std::placeholders::_1));
 }
 
 void
-	session::on_close(boost::system::error_code ec)
+	WS_async::on_close(boost::system::error_code ec)
 {
 	if (ec)
 		return fail(ec, "close");
@@ -154,7 +154,7 @@ int main(int argc, char** argv)
 	boost::asio::io_context ioc;
 
 	// Launch the asynchronous operation
-	std::make_shared<session>(ioc)->run(host, port, text);
+	std::make_shared<WS_async>(ioc)->run(host, port, text);
 
 	// Run the I/O service. The call will return when
 	// the socket is closed.
