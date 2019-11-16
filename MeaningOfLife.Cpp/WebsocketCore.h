@@ -1,6 +1,5 @@
 
 #pragma once
-#include <string>
 
 using namespace std;
 
@@ -12,10 +11,12 @@ namespace MeaningOfLife
 		{
 		public:
 			WebsocketCore();
-			WebsocketCore(string target);
+			WebsocketCore(string host, string port);
 			void saveJSON(string json);
+			int init(string host, string port, string text);
 		private:
-			string target;
+			string host;
+			string port;
 		};
 	}
 }

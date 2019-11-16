@@ -72,6 +72,7 @@
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="WebsocketCore.h" />
     <ClInclude Include="WsController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +82,7 @@
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="WebsocketCore.cpp" />
     <ClCompile Include="WsController.cpp" />
   </ItemGroup>
   <ItemGroup>

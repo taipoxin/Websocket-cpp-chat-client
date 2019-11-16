@@ -12,6 +12,7 @@
 #include "CastCoreUtils.h"
 #include <stdio.h>
 #include <time.h>
+#include "WebsocketCore.h"
 
 namespace beast = boost::beast;         // from <boost/beast.hpp>
 namespace http = beast::http;           // from <boost/beast/http.hpp>
@@ -21,58 +22,14 @@ using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 using namespace std;
 
-// Sends a WebSocket message and prints the response
-int test(string host, string port, string text)
-{
-    try
-    {
-        // The io_context is required for all I/O
-        net::io_context ioc;
-        // These objects perform our I/O
-        tcp::resolver resolver{ioc};
-        websocket::stream<tcp::socket> ws{ioc};
-        // Look up the domain name
-        auto const results = resolver.resolve(host, port);
-        // Make the connection on the IP address we get from a lookup
-        net::connect(ws.next_layer(), results.begin(), results.end());
-
-		ws.handshake_ex(host, "/", [](websocket::request_type& req)
-		{
-			req.set(http::field::user_agent,
-				std::string(BOOST_BEAST_VERSION_STRING) +
-				" websocket-client-coro");
-		});
-
-        // Send the message
-		ws.binary(true);
-        ws.write(boost::asio::buffer(std::string(text)));
-
-        // This buffer will hold the incoming message
-        beast::multi_buffer buffer;
-
-        // Read a message into our buffer
-        ws.read(buffer);
-
-        // Close the WebSocket connection
-        ws.close(websocket::close_code::normal);
-
-        // If we get here then the connection is closed gracefully
-        // The make_printable() function helps print a ConstBufferSequence
-        std::cout << boost::beast::buffers(buffer.data()) << std::endl;
-    }
-    catch(std::exception const& e)
-    {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
-}
 
 wstring MeaningOfLife::Cpp::Logic::Get(string text) const
 {
 	cout << text << endl;
+	
+	WebsocketCore core = WebsocketCore("echo.websocket.org", "80");
 
-	test("echo.websocket.org", "80", "Привет из Беларуси");
+	core.init("echo.websocket.org", "80", "Привет из Беларуси");
 
 	int id = -10;
 	string two = "Дароу";

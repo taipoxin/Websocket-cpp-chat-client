@@ -9,7 +9,7 @@ namespace ChatClient
 	// dispatcher for mainWindow
 	class Config
 	{
-		public static string wsSource = "ws://192.168.137.97:9000";
+		public static string wsSource = "ws://localhost:443";
 
 		public static string userName = "";
 		public static string logFileName = "logs.txt";

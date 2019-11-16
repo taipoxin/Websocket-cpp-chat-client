@@ -36,6 +36,9 @@
     <ClInclude Include="WsController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WebsocketCore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
@@ -57,6 +60,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WsController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WebsocketCore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
