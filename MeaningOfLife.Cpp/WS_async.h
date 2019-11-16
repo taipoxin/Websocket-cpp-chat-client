@@ -37,6 +37,7 @@ namespace MeaningOfLife
 				, ws_(ioc) {}
 
 			// Start the asynchronous operation
+			//void a(websocket::stream<tcp::socket> ws_, string text, std::shared_ptr<MeaningOfLife::Cpp::WS_async> pt);
 			void
 				run(
 					char const* host,

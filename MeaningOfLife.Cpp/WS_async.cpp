@@ -1,4 +1,8 @@
 #include "WS_async.h"
+#include <fstream>
+#include <cstdio>
+#include <boost/thread.hpp>
+#include <thread>
 
 using namespace MeaningOfLife::Cpp;
 
@@ -65,6 +69,20 @@ void
 			std::placeholders::_1));
 }
 
+void a(websocket::stream<tcp::socket>* ws_, string text, std::shared_ptr<MeaningOfLife::Cpp::WS_async> pt) {
+	cout << "новый тред" << endl;
+	cout << text << endl;
+	
+	ws_->async_write(
+		boost::asio::buffer(text),
+		std::bind(
+			&WS_async::on_write,
+			pt,
+			std::placeholders::_1,
+			std::placeholders::_2));
+	cout << "Вызвано" << endl;
+}
+
 void
 	WS_async::on_handshake(boost::system::error_code ec)
 {
@@ -73,13 +91,44 @@ void
 
 	// Send the message
 	ws_.binary(true);
-	ws_.async_write(
-		boost::asio::buffer(text_),
-		std::bind(
-			&WS_async::on_write,
-			shared_from_this(),
-			std::placeholders::_1,
-			std::placeholders::_2));
+	double timeoutS = 1;
+	clock_t this_time = clock();
+	clock_t last_time = this_time;
+	while (true) {
+		this_time = clock();
+		if ((timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
+			cout << "re" << endl;
+			last_time = clock();
+			ifstream inFile;
+			inFile.open("input.txt");
+			if (!inFile) {
+				continue;
+			}
+			string sum;
+			string x;
+			while (inFile >> x) {
+				sum = sum + x;
+			}
+			cout << "read: " << endl;
+			cout << sum << endl;
+			inFile.close();
+			if (remove("input.txt") != 0) {
+				cout << "Error deleting file" <<endl;
+			}
+			//sum = "дарова ебать";
+			std::thread thread_object(a, &ws_, sum, shared_from_this());
+			/*
+			ws_.async_write(
+				boost::asio::buffer(sum),
+				std::bind(
+					&WS_async::on_write,
+					shared_from_this(),
+					std::placeholders::_1,
+					std::placeholders::_2));
+				*/	
+			//thread_object.join();
+		}
+	}
 }
 
 void
@@ -87,8 +136,9 @@ void
 		boost::system::error_code ec,
 		std::size_t bytes_transferred)
 {
+	cout << "on_write: " << endl;
+	cout << bytes_transferred << endl;
 	boost::ignore_unused(bytes_transferred);
-
 	if (ec)
 		return fail(ec, "write");
 
