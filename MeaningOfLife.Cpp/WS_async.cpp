@@ -116,8 +116,8 @@ void
 				cout << "Error deleting file" <<endl;
 			}
 			//sum = "дарова ебать";
-			std::thread thread_object(a, &ws_, sum, shared_from_this());
-			/*
+			//std::thread thread_object(a, &ws_, sum, shared_from_this());
+			
 			ws_.async_write(
 				boost::asio::buffer(sum),
 				std::bind(
@@ -125,7 +125,8 @@ void
 					shared_from_this(),
 					std::placeholders::_1,
 					std::placeholders::_2));
-				*/	
+			break;
+				
 			//thread_object.join();
 		}
 	}
@@ -179,7 +180,7 @@ void
 	// If we get here then the connection is closed gracefully
 
 	// The buffers() function helps print a ConstBufferSequence
-	std::cout << boost::beast::buffers(buffer_.data()) << std::endl;
+	std::cout << "Message from ws_server: " << boost::beast::buffers(buffer_.data()) << std::endl;
 }
 
 /*
