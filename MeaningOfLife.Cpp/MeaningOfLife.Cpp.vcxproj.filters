@@ -39,6 +39,9 @@
     <ClInclude Include="WebsocketCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WS_async_example.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
@@ -63,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebsocketCore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WS_async_example.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

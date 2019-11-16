@@ -40,7 +40,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -74,6 +76,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WebsocketCore.h" />
     <ClInclude Include="WsController.h" />
+    <ClInclude Include="WS_async_example.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
@@ -84,6 +87,7 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WebsocketCore.cpp" />
     <ClCompile Include="WsController.cpp" />
+    <ClCompile Include="WS_async_example.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="conanfile.txt" />
