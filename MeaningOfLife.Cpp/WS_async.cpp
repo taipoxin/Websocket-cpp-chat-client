@@ -91,26 +91,28 @@ void
 
 	// Send the message
 	ws_.binary(true);
-	double timeoutS = 1;
+	double timeoutS = 0.5;
 	clock_t this_time = clock();
 	clock_t last_time = this_time;
 	while (true) {
 		this_time = clock();
 		if ((timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
-			cout << "re" << endl;
+			//cout << "re" << endl;
 			last_time = clock();
 			ifstream inFile;
 			inFile.open("input.txt");
 			if (!inFile) {
 				continue;
 			}
-			string sum;
-			string x;
+			string text;
+			std::getline(inFile, text);
+			/*
 			while (inFile >> x) {
 				sum = sum + x;
 			}
+			*/
 			cout << "read: " << endl;
-			cout << sum << endl;
+			cout << text << endl;
 			inFile.close();
 			if (remove("input.txt") != 0) {
 				cout << "Error deleting file" <<endl;
@@ -119,7 +121,7 @@ void
 			//std::thread thread_object(a, &ws_, sum, shared_from_this());
 			
 			ws_.async_write(
-				boost::asio::buffer(sum),
+				boost::asio::buffer(text),
 				std::bind(
 					&WS_async::on_write,
 					shared_from_this(),
