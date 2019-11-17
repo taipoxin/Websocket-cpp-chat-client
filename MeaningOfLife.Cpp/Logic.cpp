@@ -1,63 +1,32 @@
-﻿
-#include <iostream>
-#include "Logic.h"
-#include "ws_client_orig.h"
-#include "CastCoreUtils.h"
-#include <stdio.h>
-#include <time.h>
-#include "WS_Core.h"
+﻿#include "Logic.h"
 
 using namespace std;
-
-int connectWS(websocket_endpoint &endpoint, string s, double timeoutS) {
-	int id = -10;
-	clock_t this_time = clock();
-	clock_t last_time = this_time;
-	id = endpoint.connect(s);
-	connection_metadata::ptr metadata = endpoint.get_metadata(id);
-
-	while ((metadata.get()->get_status() != "Open") || (timeoutS * CLOCKS_PER_SEC > (double)(this_time - last_time))) {
-		this_time = clock();
-	}
-	if (timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time)) {
-		cout << "Connection Timeout" << endl;
-	}
-	return id;
-}
-
 
 wstring MeaningOfLife::Cpp::Logic::Get(string text) const
 {
 	cout << text << endl;
-
-	websocket_endpoint endpoint;
-	string s = "ws://echo.websocket.org";
+	string host = "ws://echo.websocket.org";
 	
-	int id = -10;
-	//wsAll(s);
 	try {
-
-		WS_Core core("ws://echo.websocket.org");
-		cout << "here" << endl;
+		WS_Core core(host);
 		core.send("Дарова");
-		auto messages = core.getMessages();
-		cout << messages.front() << endl;
+		core.send("Hi there");
+		core.send("Как дела?");
+
+		waitSec(3);
+		//core.close();
+		vector<string> messages = core.getMessages();
+		for (auto i = messages.begin(); i != messages.end(); ++i) {
+			cout << *i << "; ";
+		}
+		cout << endl;
 	}
 	catch (std::exception const& e)
 	{
 		std::cerr << "Error: " << e.what() << std::endl;
 		return string_to_wstring(e.what());
 	}
-	/*
-	string message = "Дарова";
-	endpoint.send(id, message);
-
-	connection_metadata::ptr metadata = endpoint.get_metadata(id);
-
-	cout << *metadata << endl;
-
-	*/
-	//string two = "Привет ыыы " + metadata.get()->get_status();
+	int id = -10;
 	string two = "Привет ыыы ";
 	wstring wide = string_to_wstring(two);
 

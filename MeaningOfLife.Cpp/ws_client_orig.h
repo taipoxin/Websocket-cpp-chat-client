@@ -2,7 +2,6 @@
 #pragma once
 
 #include <websocketpp/config/asio_no_tls_client.hpp>
-
 #include <websocketpp/client.hpp>
 
 #include <websocketpp/common/thread.hpp>
@@ -38,6 +37,7 @@ public:
 	std::string get_status() const;
 
 	std::vector<std::string> get_messages();
+	std::vector<std::string> get_messages_sent();
 
 	void record_sent_message(std::string message);
 
@@ -50,6 +50,7 @@ private:
 	std::string m_server;
 	std::string m_error_reason;
 	std::vector<std::string> m_messages;
+	std::vector<std::string> m_messages_sent;
 };
 
 

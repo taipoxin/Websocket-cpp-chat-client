@@ -40,13 +40,17 @@ void connection_metadata::on_close(client * c, websocketpp::connection_hdl hdl) 
 }
 
 void connection_metadata::on_message(websocketpp::connection_hdl, client::message_ptr msg) {
-	cout << "on message" << endl;
+	cout << "on message: " << msg->get_payload() << endl;
+	//cout << msg->get_payload() << endl;
+	m_messages.push_back(msg->get_payload());
+	/*
 	if (msg->get_opcode() == websocketpp::frame::opcode::text) {
-		m_messages.push_back("<< " + msg->get_payload());
+		m_messages.push_back(msg->get_payload());
 	}
 	else {
-		m_messages.push_back("<< " + websocketpp::utility::to_hex(msg->get_payload()));
+		m_messages.push_back(websocketpp::utility::to_hex(msg->get_payload()));
 	}
+	*/
 }
 
 websocketpp::connection_hdl connection_metadata::get_hdl() const {
@@ -63,9 +67,12 @@ std::string connection_metadata::get_status() const {
 std::vector<std::string> connection_metadata::get_messages() {
 	return m_messages;
 }
+std::vector<std::string> connection_metadata::get_messages_sent() {
+	return m_messages_sent;
+}
 
 void connection_metadata::record_sent_message(std::string message) {
-	m_messages.push_back(">> " + message);
+	m_messages_sent.push_back(message);
 }
 
 // END connection_metadata
@@ -170,14 +177,14 @@ void websocket_endpoint::close(int id, websocketpp::close::status::value code, s
 
 void websocket_endpoint::send(int id, std::string message) {
 	websocketpp::lib::error_code ec;
-	std::cout << "> Send" << endl;
+	std::cout << "> Send: " << message << endl;
 	con_list::iterator metadata_it = m_connection_list.find(id);
 	if (metadata_it == m_connection_list.end()) {
 		std::cout << "> No connection found with id " << id << std::endl;
 		return;
 	}
 
-	m_endpoint.send(metadata_it->second->get_hdl(), message, websocketpp::frame::opcode::BINARY, ec);
+	m_endpoint.send(metadata_it->second->get_hdl(), message, websocketpp::frame::opcode::binary, ec);
 	if (ec) {
 		std::cout << "> Error sending message: " << ec.message() << std::endl;
 		return;

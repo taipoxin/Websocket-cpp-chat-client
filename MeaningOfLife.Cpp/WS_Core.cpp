@@ -25,7 +25,6 @@ void WS_Core::send(string message) {
 }
 std::vector<std::string> WS_Core::getMessages() {
 	connection_metadata::ptr metadata = endpoint.get_metadata(this->id);
-	// TODO: end
 	return metadata.get()->get_messages();
 }
 
