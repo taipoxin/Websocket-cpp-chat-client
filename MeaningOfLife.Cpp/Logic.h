@@ -1,16 +1,6 @@
 // Logic.h
 #pragma once
-
 #include <string>
-#include <iostream>
-#include <stdio.h>
-#include <time.h>
-
-
-#include "ws_client_orig.h"
-#include "CastCoreUtils.h"
-#include "WS_Core.h"
-
 
 namespace MeaningOfLife
 {	
