@@ -81,7 +81,7 @@ websocket_endpoint::websocket_endpoint() : m_next_id(0) {
 
 	m_endpoint.init_asio();
 	m_endpoint.start_perpetual();
-	m_endpoint.set_open_handshake_timeout(3000);
+	m_endpoint.set_open_handshake_timeout(10000);
 	m_thread = websocketpp::lib::make_shared<websocketpp::lib::thread>(&client::run, &m_endpoint);
 }
 

@@ -24,6 +24,7 @@ void processFile(string file, std::vector<std::string>* vector) {
 	if (!inFile) {
 		return;
 	}
+	cout << endl;
 	string str;
 	string s;
 	while (std::getline(inFile, s)) {
@@ -59,7 +60,7 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 		while (true) {
 			this_time = clock();
 			if ((repeat * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
-				cout << "." << endl;
+				cout << ".";
 				last_time = clock();
 				if (core == nullptr) {
 					processFile("init.txt", &vec);

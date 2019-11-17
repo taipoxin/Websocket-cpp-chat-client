@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Threading;
 using System.Windows.Threading;
 
+
 namespace MeaningOfLife.WPF
 {
     using Cpp.CLI;
@@ -25,24 +26,28 @@ namespace MeaningOfLife.WPF
     {
         Logic wrapper = new Logic();
         WS_Caller caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
+        OutputHandler csharpOutputHandler = new OutputHandler("output.txt");
 
         public MainWindow()
         {
             InitializeComponent();
             var pathLib = "MeaningOfLife.Cpp.dll";
             Logic.InitializeLibrary(pathLib);
-            ThreadStart threadDelegate = new ThreadStart(wrapper.wsCoreLoop);
-            Thread newThread = new Thread(threadDelegate);
-            newThread.Start();
+            // C# => C++
+            ThreadStart cppHandler = new ThreadStart(wrapper.wsCoreLoop);
+            Thread cppHandlerT = new Thread(cppHandler);
+            cppHandlerT.Start();
 
+            // C++ => C#
+            ThreadStart csharpHandler = new ThreadStart(csharpOutputHandler.handle);
+            Thread csharpHandlerT = new Thread(csharpHandler);
+            csharpHandlerT.Start();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FileLogger logger = new FileLogger("logs.txt");
             
-            //caller.send("init:::ws://echo.websocket.org");
-            //Thread.Sleep(3000);
             string j = @"
             {
               ""type"": ""authorize"",
@@ -51,16 +56,6 @@ namespace MeaningOfLife.WPF
             }"; 
             caller.send(j);
             logger.log("test лог");
-            
-            /*
-            string aa = "Дарова с++";
-            string res = wrapper.Get(aa);
-            Console.WriteLine(res);
-            MessageBox.Show("The answer is " + res);
-            */
-           
-
-            
         }
     }
 }
