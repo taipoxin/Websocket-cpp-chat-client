@@ -11,7 +11,9 @@ connection_metadata::connection_metadata(int id, websocketpp::connection_hdl hdl
 	, m_status("Connecting")
 	, m_uri(uri)
 	, m_server("N/A")
-{}
+{
+	handler = new MessageHandler("output.txt");
+}
 
 void connection_metadata::on_open(client * c, websocketpp::connection_hdl hdl) {
 	m_status = "Open";
@@ -40,17 +42,10 @@ void connection_metadata::on_close(client * c, websocketpp::connection_hdl hdl) 
 }
 
 void connection_metadata::on_message(websocketpp::connection_hdl, client::message_ptr msg) {
-	cout << "on message: " << msg->get_payload() << endl;
+	cout << "inside on_message" << endl;
 	//cout << msg->get_payload() << endl;
 	m_messages.push_back(msg->get_payload());
-	/*
-	if (msg->get_opcode() == websocketpp::frame::opcode::text) {
-		m_messages.push_back(msg->get_payload());
-	}
-	else {
-		m_messages.push_back(websocketpp::utility::to_hex(msg->get_payload()));
-	}
-	*/
+	handler->handle(msg->get_payload());
 }
 
 websocketpp::connection_hdl connection_metadata::get_hdl() const {
@@ -86,7 +81,7 @@ websocket_endpoint::websocket_endpoint() : m_next_id(0) {
 
 	m_endpoint.init_asio();
 	m_endpoint.start_perpetual();
-	//m_endpoint.set_open_handshake_timeout(1000);
+	m_endpoint.set_open_handshake_timeout(3000);
 	m_thread = websocketpp::lib::make_shared<websocketpp::lib::thread>(&client::run, &m_endpoint);
 }
 

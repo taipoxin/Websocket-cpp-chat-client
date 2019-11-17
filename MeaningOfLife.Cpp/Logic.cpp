@@ -18,62 +18,81 @@ using namespace std;
 #include <iterator>
 
 
+void processFile(string file, std::vector<std::string>* vector) {
+	ifstream inFile;
+	inFile.open(file);
+	if (!inFile) {
+		return;
+	}
+	string str;
+	string s;
+	while (std::getline(inFile, s)) {
+		str = str + s;
+	}
+	cout << "read in processFile: " << endl;
+	std::string command = str.substr(0, str.find(":::"));
+	std::string body = str.substr(str.find(":::") + 3);
+	cout << "command: " << command << endl;
+	cout << "data: " << body << endl;
+	vector->push_back(command);
+	vector->push_back(body);
+	cout << vector->at(0) << endl;
+	cout << vector->at(1) << endl;
+	inFile.close();
+	if (remove(file.c_str()) != 0) {
+		cout << "Error deleting file" << endl;
+	}
+	return;
+}
+
 void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 	string host = "ws://echo.websocket.org";
-	double timeoutS = 1;
+	double repeat = 1;
 
 	try {
 		cout << "Thread start" << endl;
 		WS_Core* core;
-		core = new WS_Core();
+		core = nullptr;
 		clock_t this_time = clock();
 		clock_t last_time = this_time;
+		std::vector<std::string> vec;
 		while (true) {
 			this_time = clock();
-			if ((timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
+			if ((repeat * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
 				cout << "." << endl;
 				last_time = clock();
-				
-				ifstream inFile;
-				inFile.open("input.txt");
-				if (!inFile) {
+				if (core == nullptr) {
+					processFile("init.txt", &vec);
+					if (vec.size() == 0)
+						continue;
+					string body = vec.at(1);
+					core = new WS_Core(body);
+					vec.clear();
+				}
+				processFile("input.txt", &vec);
+				if (vec.size() == 0)
 					continue;
+				std::string command = vec.at(0);
+				std::string body = vec.at(1);
+				vec.clear();
+				// TODO: here write command call
+				SWITCH (command) {
+					CASE("init") :
+						core = new WS_Core(body);
+					break;	
+					CASE("connect") :
+						core->connectWS(stod(body));
+					break;
+					CASE("send") :
+						core->send(body);
+					break;
+					CASE("close") :
+						core->close();
+					break;
+					CASE("isalive") :
+						core->isAlive();
+					break;
 				}
-				
-				string str;
-				while (std::getline(inFile, str)) {
-					cout << "read: " << endl;
-					std::vector<std::string> words;
-					std::string command = str.substr(0, str.find(":::"));
-					std::string body = str.substr(str.find(":::") + 3);
-					cout << command << ";" << body << endl;
-					//split(str, words);
-					// TODO: here write command call
-					SWITCH (command) {
-						CASE("init") :
-							core = new WS_Core(host);
-						break;	
-						CASE("connect") :
-							core->connectWS(stod(body));
-						break;
-						CASE("send") :
-							core->send(body);
-						break;
-						CASE("close") :
-							core->close();
-						break;
-						CASE("isalive") :
-							core->isAlive();
-						break;
-					}
-					//cout << str << endl;
-					//std::copy(words.begin(), words.end(), std::ostream_iterator<std::string>(std::cout, ";"));
-				}
-				inFile.close();
-				if (remove("input.txt") != 0) {
-					cout << "Error deleting file" << endl;
-				}
-
 			}
 		}
 	}

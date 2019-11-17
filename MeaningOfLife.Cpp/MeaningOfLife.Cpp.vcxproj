@@ -73,6 +73,7 @@
     <ClInclude Include="Entities.h" />
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="MessageHandler.h" />
     <ClInclude Include="str_switch.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WsController.h" />
@@ -86,6 +87,7 @@
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WsController.cpp" />
     <ClCompile Include="WS_Caller.cpp" />

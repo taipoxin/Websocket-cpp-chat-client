@@ -41,7 +41,7 @@ bool WS_Core::isAlive() {
 
 WS_Core::WS_Core(string host) {
 	this->host = host;
-	this->id = connectWS(5);
+	this->id = connectWS(10);
 	cout << "id set: " << id << endl;
 }
 

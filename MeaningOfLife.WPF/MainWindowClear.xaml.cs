@@ -24,6 +24,8 @@ namespace MeaningOfLife.WPF
     public partial class MainWindow : Window
     {
         Logic wrapper = new Logic();
+        WS_Caller caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,15 +34,24 @@ namespace MeaningOfLife.WPF
             ThreadStart threadDelegate = new ThreadStart(wrapper.wsCoreLoop);
             Thread newThread = new Thread(threadDelegate);
             newThread.Start();
-            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FileLogger logger = new FileLogger("logs.txt");
-            WS_Caller caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
-            caller.send("Здарова брат");
+            
+            //caller.send("init:::ws://echo.websocket.org");
+            //Thread.Sleep(3000);
+            string j = @"
+            {
+              ""type"": ""authorize"",
+              ""user"": ""username"",
+              ""password"": ""12345""
+            }"; 
+            caller.send(j);
             logger.log("test лог");
+            
             /*
             string aa = "Дарова с++";
             string res = wrapper.Get(aa);

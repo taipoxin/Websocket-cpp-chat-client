@@ -6,13 +6,15 @@
 
 #include <websocketpp/common/thread.hpp>
 #include <websocketpp/common/memory.hpp>
-
+#include "MessageHandler.h"
 #include <cstdlib>
 #include <iostream>
 #include <map>
 #include <string>
 #include <sstream>
 
+using namespace std;
+using namespace MeaningOfLife::Cpp;
 
 typedef websocketpp::client<websocketpp::config::asio_client> client;
 
@@ -45,6 +47,7 @@ public:
 private:
 	int m_id;
 	websocketpp::connection_hdl m_hdl;
+	MessageHandler* handler;
 	std::string m_status;
 	std::string m_uri;
 	std::string m_server;

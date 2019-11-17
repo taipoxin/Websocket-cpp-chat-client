@@ -39,7 +39,7 @@ bool WS_Caller::IsAlive() {
 WS_Caller::WS_Caller(string file, string host) {
 	this->file = file;
 	this->host = host;
-	call(file, "init:::" + host);
+	call("init.txt", "init:::" + host);
 }
 
 /*
