@@ -20,6 +20,11 @@ String^ MeaningOfLife::Cpp::CLI::Logic::Get(String^ text)
 	return a;
 }
 
+void MeaningOfLife::Cpp::CLI::Logic::wsCoreLoop()
+{
+	_impl->wsCoreLoop();
+}
+
 void MeaningOfLife::Cpp::CLI::Logic::Destroy()
 {
 	if (_impl != nullptr)

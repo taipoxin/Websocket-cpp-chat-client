@@ -12,11 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace MeaningOfLife.WPF
 {
     using Cpp.CLI;
     using Microsoft.Win32;
+    using System.Threading;
 
     public partial class MainWindow : Window
     {
@@ -26,19 +29,24 @@ namespace MeaningOfLife.WPF
             InitializeComponent();
             var pathLib = "MeaningOfLife.Cpp.dll";
             Logic.InitializeLibrary(pathLib);
-            //wrapper.
+            ThreadStart threadDelegate = new ThreadStart(wrapper.wsCoreLoop);
+            Thread newThread = new Thread(threadDelegate);
+            newThread.Start();
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             FileLogger logger = new FileLogger("logs.txt");
             WS_Caller caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
+            caller.send("Здарова брат");
             logger.log("test лог");
-            
+            /*
             string aa = "Дарова с++";
             string res = wrapper.Get(aa);
             Console.WriteLine(res);
             MessageBox.Show("The answer is " + res);
+            */
            
 
             

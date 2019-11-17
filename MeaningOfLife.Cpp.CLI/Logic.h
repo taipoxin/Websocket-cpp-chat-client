@@ -27,6 +27,7 @@ namespace MeaningOfLife
 				!Logic();
 
 				String^ Get(String^ text);
+				void wsCoreLoop();
 
 				void Destroy();
 

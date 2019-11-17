@@ -13,6 +13,7 @@ namespace MeaningOfLife
 		class __declspec(dllexport) Logic
 		{
 		public:
+			void wsCoreLoop();
 			std::wstring Get(string text) const;
 		};
 	}
