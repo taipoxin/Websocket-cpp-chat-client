@@ -42,6 +42,9 @@
     <ClInclude Include="WS_Core.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WS_Caller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
@@ -69,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WS_Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WS_Caller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
