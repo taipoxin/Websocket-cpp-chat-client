@@ -33,8 +33,17 @@ void WS_Core::close() {
 	endpoint.close(this->id, close_code, "normal");
 }
 
+bool WS_Core::isAlive() {
+	connection_metadata::ptr metadata = endpoint.get_metadata(this->id);
+	string status = metadata.get()->get_status();
+	return (status == "Open");
+}
+
 WS_Core::WS_Core(string host) {
 	this->host = host;
 	this->id = connectWS(5);
 	cout << "id set: " << id << endl;
+}
+
+WS_Core::WS_Core() {
 }

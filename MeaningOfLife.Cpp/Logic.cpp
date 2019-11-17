@@ -8,8 +8,15 @@
 #include "ws_client_orig.h"
 #include "CastCoreUtils.h"
 #include "WS_Core.h"
+#include "str_switch.h"
 
 using namespace std;
+
+#include <string>
+#include <sstream>
+#include <algorithm>
+#include <iterator>
+
 
 void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 	string host = "ws://echo.websocket.org";
@@ -17,7 +24,8 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 
 	try {
 		cout << "Thread start" << endl;
-		WS_Core core(host);
+		WS_Core* core;
+		core = new WS_Core();
 		clock_t this_time = clock();
 		clock_t last_time = this_time;
 		while (true) {
@@ -35,8 +43,31 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 				string str;
 				while (std::getline(inFile, str)) {
 					cout << "read: " << endl;
-					cout << str << endl;
+					std::vector<std::string> words;
+					std::string command = str.substr(0, str.find(":::"));
+					std::string body = str.substr(str.find(":::") + 3);
+					cout << command << ";" << body << endl;
+					//split(str, words);
 					// TODO: here write command call
+					SWITCH (command) {
+						CASE("init") :
+							core = new WS_Core(host);
+						break;	
+						CASE("connect") :
+							core->connectWS(stod(body));
+						break;
+						CASE("send") :
+							core->send(body);
+						break;
+						CASE("close") :
+							core->close();
+						break;
+						CASE("isalive") :
+							core->isAlive();
+						break;
+					}
+					//cout << str << endl;
+					//std::copy(words.begin(), words.end(), std::ostream_iterator<std::string>(std::cout, ";"));
 				}
 				inFile.close();
 				if (remove("input.txt") != 0) {

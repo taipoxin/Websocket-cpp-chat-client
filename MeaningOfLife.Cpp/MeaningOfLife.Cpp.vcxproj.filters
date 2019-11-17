@@ -45,6 +45,9 @@
     <ClInclude Include="WS_Caller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="str_switch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">

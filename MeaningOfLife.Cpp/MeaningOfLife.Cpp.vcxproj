@@ -73,6 +73,7 @@
     <ClInclude Include="Entities.h" />
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="str_switch.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WsController.h" />
     <ClInclude Include="WS_Caller.h" />

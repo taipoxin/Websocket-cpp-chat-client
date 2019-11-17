@@ -18,6 +18,7 @@ namespace MeaningOfLife
 		class __declspec(dllexport) WS_Core
 		{
 		public:
+			WS_Core();
 			WS_Core(string host);
 			int id;
 			websocket_endpoint endpoint;
@@ -25,6 +26,7 @@ namespace MeaningOfLife
 			int connectWS(double timeoutS);
 			void send(string message);
 			void close();
+			bool isAlive();
 			std::vector<std::string> getMessages();
 		};
 	}
