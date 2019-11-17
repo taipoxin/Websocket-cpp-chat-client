@@ -76,6 +76,8 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="WsController.h" />
     <ClInclude Include="WS_async.h" />
+    <ClInclude Include="ws_client_orig.h" />
+    <ClInclude Include="WS_Core.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
@@ -86,6 +88,8 @@
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WsController.cpp" />
     <ClCompile Include="WS_async.cpp" />
+    <ClCompile Include="ws_client_orig.cpp" />
+    <ClCompile Include="WS_Core.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="conanfile.txt" />

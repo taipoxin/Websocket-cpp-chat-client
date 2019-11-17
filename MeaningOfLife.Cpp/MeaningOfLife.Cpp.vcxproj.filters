@@ -39,6 +39,12 @@
     <ClInclude Include="WS_async.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ws_client_orig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WS_Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
@@ -63,6 +69,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WS_async.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ws_client_orig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WS_Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
