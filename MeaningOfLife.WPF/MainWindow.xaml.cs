@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading;
@@ -15,10 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using LiteDB;
 using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
-using WebSocketSharp;
 
 namespace ChatClient
 {

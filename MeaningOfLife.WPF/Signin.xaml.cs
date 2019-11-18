@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Newtonsoft.Json;
-using WebSocketSharp;
 
 using MeaningOfLife.Cpp.CLI;
 
@@ -66,7 +65,6 @@ namespace ChatClient
 
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
-			//l.logg("", false);
 			if (isPosition)
 			{
 				this.Left = leftPos;
@@ -81,14 +79,7 @@ namespace ChatClient
 			}
 
 			Visibility = Visibility.Visible;
-		}
-
-		private WsController initWsController()
-		{
-			WsController c = new WsController();
-			c.setSigninWindow(this);
-			return c;
-		}
+		}  
         
 		public void setCaller(WS_Caller c)
 		{
@@ -161,27 +152,8 @@ namespace ChatClient
 				Config.userName = u;
 				string p = PasswordBox.Password;
 				string jsonReq = JsonConvert.SerializeObject(createRequest(u, p));
-
-                //WebSocket w = wsController.getWs();
-
                 // пытаемся отправить сообщение об авторизации
                 caller.send(jsonReq);
-                /*
-				if (w != null && w.IsAlive)
-				{
-					l.log("sending auth request");
-					w.Send(jsonReq);
-				}
-                
-				// если не получается, то 
-				else
-				{
-					l.log("auth fail");
-					Thread t = new Thread(delegate() { checkConnectAndSendRequest(w, jsonReq); });
-					t.IsBackground = true;
-					t.Start();
-				}
-                */
             }
             else
 			{
@@ -194,17 +166,6 @@ namespace ChatClient
 				openMainWindow();
 			}
 		}
-
-		private void checkConnectAndSendRequest(WebSocket w, String jsonReq)
-		{
-			while (w == null || w.IsAlive)
-			{
-				Thread.Sleep(100);
-			}
-			l.log("sending auth request");
-			w.Send(jsonReq);
-		}
-
 		// Create account
 		private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{

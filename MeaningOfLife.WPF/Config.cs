@@ -12,6 +12,6 @@ namespace ChatClient
 		public static string wsSource = "ws://localhost:443";
 
 		public static string userName = "";
-		public static string logFileName = "logs.txt";
+		public static string logFileName = "logsWPF.txt";
 	}
 }

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using LiteDB;
 using Newtonsoft.Json;
 
 namespace ChatClient
@@ -85,12 +84,14 @@ namespace ChatClient
 					ScrollMessageListToEnd();
 
 					// serialise
+                    /*
 					using (var db = new LiteDatabase(@Config.userName+ "_local.db"))
 					{
 						var messages = db.GetCollection<Entities.MessageEntity>(mes.channel + "_mes");
 						var ent = new Entities.MessageEntity { from = mes.@from, message = mes.message, time = mes.time };
 						messages.Insert(ent);
 					}
+                    */
 				}
 			}
 		}
@@ -217,6 +218,7 @@ namespace ChatClient
 		{
 			// resp: {message, from, channel, time, type: 'message'}
 			// храним: {message, from, time}
+            /*
 			using (var db = new LiteDatabase(@Config.userName + "_local.db"))
 			{
 				var messages = db.GetCollection<Entities.MessageEntity>(channelName + "_mes");
@@ -234,6 +236,7 @@ namespace ChatClient
 				}
 				requestChannelMessages(channelName, from);
 			}
+            */
 		}
 	}
 }

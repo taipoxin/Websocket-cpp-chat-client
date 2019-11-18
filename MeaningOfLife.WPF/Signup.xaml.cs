@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
-using WebSocketSharp;
 
 namespace ChatClient
 {
@@ -88,7 +87,6 @@ namespace ChatClient
 			}
 			string jsonReq = JsonConvert.SerializeObject(createRegRequest(user, email, pass));
 
-            //WebSocket w = wsController.getWs();
             // пытаемся отправить сообщение об регистрации
             if (caller != null)
             {
@@ -96,35 +94,10 @@ namespace ChatClient
                 caller.send(jsonReq);
                 return true;
             }
-            /*
-			if (w != null && w.IsAlive)
-			{
-				l.log("sending auth request");
-				w.Send(jsonReq);
-			}
-			// если не получается, то траим
-			else
-			{
-				l.log("reg fail");
-				Thread t = new Thread(delegate() { checkConnectAndSendRequest(w, jsonReq); });
-				t.IsBackground = true;
-				t.Start();
-			}
-            */
             return false;
 
 		}
-
-		private void checkConnectAndSendRequest(WebSocket w, String jsonReq)
-		{
-			while (w == null || w.IsAlive)
-			{
-				Thread.Sleep(100);
-			}
-			l.log("sending auth request");
-			w.Send(jsonReq);
-		}
-
+        
 		public void dispatchOpenSigninWindow()
 		{
 			Dispatcher.BeginInvoke(new ThreadStart(delegate {

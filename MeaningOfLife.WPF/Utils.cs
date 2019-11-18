@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
-using WebSocketSharp;
 
 namespace ChatClient
 {
@@ -17,7 +16,6 @@ namespace ChatClient
 		// return true if successfully sended
 		public static bool sendRequest(object obj, WS_Caller c)
 		{
-			//var ws = c.getWs();
 			if (c != null)
 			{
 				c.send(JsonConvert.SerializeObject(obj));
@@ -47,7 +45,6 @@ namespace ChatClient
 		}
 		public static void sendGetOnlineUsersRequest(WS_Caller c)
 		{
-			//var ws = c.getWs();
 			if (c != null)
 			{
 				l.log("sending online users request");
