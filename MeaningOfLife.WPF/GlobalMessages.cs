@@ -65,8 +65,8 @@ namespace ChatClient
 		{
 			if (w.MessageTextBox.Text != "")
 			{
-				var ws = w.wsController.getWs();
-				if (ws != null)
+				//var ws = w.wsController.getWs();
+				if (w.caller != null)
 				{
 					// берем имя выбранного канала
 					Grid ch = (Grid)w.ChannelList.SelectedItems[0];
@@ -79,7 +79,7 @@ namespace ChatClient
 					Entities.MessageResponse mes = new Entities.MessageResponse("message", w.MessageTextBox.Text, Config.userName, DateTimeOffset.Now.ToUnixTimeMilliseconds(), name);
 					string jsonReq = JsonConvert.SerializeObject(mes);
 					l.log("sending message");
-					ws.Send(jsonReq);
+					w.caller.send(jsonReq);
 
 					w.MessageTextBox.Text = "";
 					ScrollMessageListToEnd();
@@ -197,8 +197,8 @@ namespace ChatClient
 
 		private void requestChannelMessages(string channel, long from)
 		{
-			var ws = w.wsController.getWs();
-			if (ws != null)
+			//var ws = w.wsController.getWs();
+			if (w.caller != null)
 			{
 				var getChannelMessages = new Entities.GetChannelMessagesReq();
 				getChannelMessages.type = "get_channel_messages";
@@ -207,7 +207,7 @@ namespace ChatClient
 				// запрашиваем с сервера сообщения где time > t
 				getChannelMessages.time = from;
 				string getChM = JsonConvert.SerializeObject(getChannelMessages);
-				ws.Send(getChM);
+				w.caller.send(getChM);
 			}
 		}
 

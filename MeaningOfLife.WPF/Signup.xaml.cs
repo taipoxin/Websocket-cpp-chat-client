@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
 using WebSocketSharp;
 
@@ -27,8 +28,9 @@ namespace ChatClient
 			InitializeComponent();
 		}
 
-		private WsController wsController;
-		private FileLogger l = new FileLogger(Config.logFileName);
+        WS_Caller caller;
+        OutputHandler csharpOutputHandler;
+        private FileLogger l = new FileLogger(Config.logFileName);
 
 		private double leftPos;
 		private double topPos;
@@ -51,13 +53,18 @@ namespace ChatClient
 			}
 		}
 
-		public void setWsController(WsController c)
-		{
-			c.setSignupWindow(this);
-			wsController = c;
-		}
+        public void setCaller(WS_Caller c)
+        {
+            this.caller = c;
+        }
 
-		private Entities.RegRequest createRegRequest(string user, string email, string password)
+        public void setHandler(OutputHandler h)
+        {
+            this.csharpOutputHandler = h;
+        }
+
+
+        private Entities.RegRequest createRegRequest(string user, string email, string password)
 		{
 			Entities.RegRequest r = new Entities.RegRequest();
 			r.type = "register";
@@ -81,8 +88,15 @@ namespace ChatClient
 			}
 			string jsonReq = JsonConvert.SerializeObject(createRegRequest(user, email, pass));
 
-			WebSocket w = wsController.getWs();
-			// пытаемся отправить сообщение об регистрации
+            //WebSocket w = wsController.getWs();
+            // пытаемся отправить сообщение об регистрации
+            if (caller != null)
+            {
+                l.log("sending auth request");
+                caller.send(jsonReq);
+                return true;
+            }
+            /*
 			if (w != null && w.IsAlive)
 			{
 				l.log("sending auth request");
@@ -96,7 +110,8 @@ namespace ChatClient
 				t.IsBackground = true;
 				t.Start();
 			}
-			return true;
+            */
+            return false;
 
 		}
 
@@ -124,9 +139,12 @@ namespace ChatClient
 			w.SetWindowPositions(this.Left, this.Top);
 			// показываем новое окно
 			w.Show();
+            w.setCaller(caller);
+            w.setHandler(csharpOutputHandler);
+            csharpOutputHandler.setSigninWindow(w);
 
-			// закрываем текущее окно логина
-			var window = Application.Current.Windows[0];
+            // закрываем текущее окно логина
+            var window = Application.Current.Windows[0];
 			if (window != null)
 				window.Close();
 		}

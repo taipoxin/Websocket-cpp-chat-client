@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiteDB;
+using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
 using WebSocketSharp;
 
@@ -48,8 +49,10 @@ namespace ChatClient
 		// время отправки запроса на сервер
 		private long sendTime;
 
-		public WsController wsController;
-		private FileLogger l = new FileLogger(Config.logFileName);
+
+        public WS_Caller caller;
+        OutputHandler csharpOutputHandler;
+        private FileLogger l = new FileLogger(Config.logFileName);
 
 
 		/// <summary>
@@ -66,29 +69,34 @@ namespace ChatClient
 
 			// отправляем запрос всех доступных каналов
 			// возвращается массив объектов {name, fullname, admin}
-			var ws = wsController.getWs();
-			if (ws != null)
+			//var ws = wsController.getWs();
+
+			if (caller != null)
 			{
 				var getChannels = new Entities.ChannelRequest();
 				getChannels.type = "get_channel";
 				getChannels.name = "*";
 				getChannels.from = Config.userName;
 				string getAllCh = JsonConvert.SerializeObject(getChannels);
-				ws.Send(getAllCh);
+				caller.send(getAllCh);
 			}
 		}
 
+        public void setCaller(WS_Caller c)
+        {
+            this.caller = c;
+        }
 
-		public void setWsController(WsController c)
-		{
-			c.setMainWindow(this);
-			wsController = c;
-		}
+        public void setHandler(OutputHandler h)
+        {
+            this.csharpOutputHandler = h;
+            csharpOutputHandler.setMainWindow(this);
+        }
 
-		/// <summary>
-		/// on 'Enter' key method sends message
-		/// </summary>
-		private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        /// <summary>
+        /// on 'Enter' key method sends message
+        /// </summary>
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Return)
 			{
@@ -224,15 +232,15 @@ namespace ChatClient
 			}
 
 			// отправляем запрос о создании канала
-			var ws = wsController.getWs();
-			if (ws != null)
+			//var ws = wsController.getWs();
+			if (caller != null)
 			{
 				Entities.NewChannelRequest r = new Entities.NewChannelRequest();
 				r.type = "new_channel";
 				r.name = name;
 				r.fullname = fullname;
 				r.admin = Config.userName;
-				ws.Send(JsonConvert.SerializeObject(r));
+				caller.send(JsonConvert.SerializeObject(r));
 				sending = true;
 				sendTime = new DateTime().Ticks * 10000;
 			}
@@ -264,7 +272,7 @@ namespace ChatClient
 			Grid ch = (Grid)ChannelList.SelectedItems[0];
 			string chName = ((TextBlock)ch.Children[3]).Text;
 
-			Utils.sendGetChannelUsersRequest(chName, wsController);
+			Utils.sendGetChannelUsersRequest(chName, caller);
 		}
 
 		
@@ -316,7 +324,7 @@ namespace ChatClient
 				TextBlock item = (TextBlock) e.AddedItems[0];
 				string userSelected = item.Text;
 				// отправить запрос на добавление пользователя в канал
-				Utils.sendAddUserRequest(userSelected, globalChannel.addingUserChannel, globalChannel.addingUserChannelDesc, wsController);
+				Utils.sendAddUserRequest(userSelected, globalChannel.addingUserChannel, globalChannel.addingUserChannelDesc, caller);
 
 			}
 		}

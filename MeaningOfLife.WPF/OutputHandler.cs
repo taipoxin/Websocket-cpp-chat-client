@@ -12,9 +12,9 @@ using System.Windows.Threading;
 using ChatClient;
 
 
-namespace MeaningOfLife.WPF
+namespace ChatClient
 {
-    class OutputHandler
+    public class OutputHandler
     {
         private FileLogger l = new FileLogger(Config.logFileName);
 

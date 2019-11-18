@@ -18,6 +18,7 @@ using System.Windows.Threading;
 
 namespace MeaningOfLife.WPF
 {
+    using ChatClient;
     using Cpp.CLI;
     using Microsoft.Win32;
     using System.Threading;
@@ -46,7 +47,7 @@ namespace MeaningOfLife.WPF
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileLogger logger = new FileLogger("logs.txt");
+            Cpp.CLI.FileLogger logger = new Cpp.CLI.FileLogger("logs.txt");
             
             string j = @"
             {

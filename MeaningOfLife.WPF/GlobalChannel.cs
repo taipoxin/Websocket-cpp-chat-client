@@ -52,7 +52,7 @@ namespace ChatClient
 			req.name = channelName;
 			req.@from = Config.userName;
 			l.log("try send get channel " + channelName + " request");
-			if (Utils.sendRequest(req, w.wsController))
+			if (Utils.sendRequest(req, w.caller))
 			{
 				l.log("sended");
 			}
@@ -81,7 +81,7 @@ namespace ChatClient
 		/// <param name="chDesc"></param>
 		public void addUserToChannelTaskSending(string channelName, string chDesc)
 		{
-			Utils.sendGetOnlineUsersRequest(w.wsController);
+			Utils.sendGetOnlineUsersRequest(w.caller);
 			isAddingUser = true;
 			addingUserChannel = channelName;
 			addingUserChannelDesc = chDesc;
@@ -94,7 +94,7 @@ namespace ChatClient
 		/// <param name="channelName"></param>
 		public void getChannelUsersTaskSending(string channelName)
 		{
-			Utils.sendGetChannelUsersRequest(channelName, w.wsController);
+			Utils.sendGetChannelUsersRequest(channelName, w.caller);
 			isGettingChannelUsers = true;
 			gettingChannelUsers = channelName;
 		}

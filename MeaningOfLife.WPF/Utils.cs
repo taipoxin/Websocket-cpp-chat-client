@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using MeaningOfLife.Cpp.CLI;
 using Newtonsoft.Json;
 using WebSocketSharp;
 
@@ -14,18 +15,18 @@ namespace ChatClient
 		private static FileLogger l = new FileLogger(Config.logFileName);
 
 		// return true if successfully sended
-		public static bool sendRequest(object obj, WsController c)
+		public static bool sendRequest(object obj, WS_Caller c)
 		{
-			var ws = c.getWs();
-			if (ws != null)
+			//var ws = c.getWs();
+			if (c != null)
 			{
-				ws.Send(JsonConvert.SerializeObject(obj));
+				c.send(JsonConvert.SerializeObject(obj));
 				return true;
 			}
 			return false;
 		}
 
-		public static void sendAddUserRequest(string user, string channel, string fullname, WsController c)
+		public static void sendAddUserRequest(string user, string channel, string fullname, WS_Caller c)
 		{
 
 			Entities.AddUser req = new Entities.AddUser();
@@ -44,30 +45,30 @@ namespace ChatClient
 				l.log("sending aborted");
 			}
 		}
-		public static void sendGetOnlineUsersRequest(WsController c)
+		public static void sendGetOnlineUsersRequest(WS_Caller c)
 		{
-			var ws = c.getWs();
-			if (ws != null)
+			//var ws = c.getWs();
+			if (c != null)
 			{
 				l.log("sending online users request");
 				Entities.GetOnlineUsers req = new Entities.GetOnlineUsers();
 				req.sender = Config.userName;
 				req.type = "get_online_users";
-				ws.Send(JsonConvert.SerializeObject(req));
+				c.send(JsonConvert.SerializeObject(req));
 			}
 		}
 
-		public static void sendGetChannelUsersRequest(string channel, WsController c)
+		public static void sendGetChannelUsersRequest(string channel, WS_Caller c)
 		{
-			var ws = c.getWs();
-			if (ws != null)
+			//var ws = c.getWs();
+			if (c != null)
 			{
 				l.log("sending get channel users request");
 				Entities.GetChannelUsers req = new Entities.GetChannelUsers();
 				req.sender = Config.userName;
 				req.type = "get_channel_users";
 				req.channel = channel;
-				ws.Send(JsonConvert.SerializeObject(req));
+				c.send(JsonConvert.SerializeObject(req));
 			}
 		}
 

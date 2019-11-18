@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 using WebSocketSharp;
 
+using MeaningOfLife.Cpp.CLI;
+
+
 namespace ChatClient
 {
 	/// <summary>
@@ -24,12 +27,25 @@ namespace ChatClient
 	/// </summary>
 	public partial class Signin: Window
 	{
-		public Signin()
+
+        WS_Caller caller;
+        OutputHandler csharpOutputHandler;
+
+        public Signin()
 		{
 			InitializeComponent();
-		}
+            //caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
+            caller = new WS_Caller("input.txt", "ws://localhost:443");
+            csharpOutputHandler = new OutputHandler("output.txt");
+            csharpOutputHandler.setSigninWindow(this);
+            // C++ => C#
+            ThreadStart csharpHandler = new ThreadStart(csharpOutputHandler.handle);
+            Thread csharpHandlerT = new Thread(csharpHandler);
+            csharpHandlerT.IsBackground = true;
+            csharpHandlerT.Start();
+        }
 
-		private WsController wsController;
+		//private WsController wsController;
 		private FileLogger l = new FileLogger(Config.logFileName);
 
 		private double leftPos;
@@ -63,8 +79,7 @@ namespace ChatClient
 				this.Top = getCenter(SystemParameters.PrimaryScreenHeight, ActualHeight);
 				this.Left= getCenter(SystemParameters.PrimaryScreenWidth, ActualWidth);
 			}
-			//init wsController
-			wsController = initWsController();
+
 			Visibility = Visibility.Visible;
 		}
 
@@ -74,12 +89,17 @@ namespace ChatClient
 			c.setSigninWindow(this);
 			return c;
 		}
-
-		public void setWsController(WsController c)
+        
+		public void setCaller(WS_Caller c)
 		{
-			c.setSigninWindow(this);
-			wsController = c;
+			this.caller = c;
 		}
+
+		public void setHandler(OutputHandler h)
+		{
+			this.csharpOutputHandler = h;
+		}
+        
 
 
 		public void dispatchOpenMainWindow()
@@ -94,8 +114,12 @@ namespace ChatClient
 		public void openMainWindow()
 		{
 			MainWindow w = new MainWindow();
-			w.setWsController(wsController);
-			w.Show();
+			w.setCaller(caller);
+			w.setHandler(csharpOutputHandler);
+            csharpOutputHandler.setMainWindow(w);
+
+
+            w.Show();
 
 			var window = Application.Current.Windows[0];
 			if (window != null)
@@ -108,8 +132,10 @@ namespace ChatClient
 		{
 			Signup w = new Signup();
 			w.SetWindowPositions(this.Left, this.Top);
-			w.setWsController(wsController);
-			w.Show();
+            w.setCaller(caller);
+            w.setHandler(csharpOutputHandler);
+            csharpOutputHandler.setSignupWindow(w);
+            w.Show();
 
 			var window = Application.Current.Windows[0];
 			if (window != null)
@@ -135,14 +161,18 @@ namespace ChatClient
 				Config.userName = u;
 				string p = PasswordBox.Password;
 				string jsonReq = JsonConvert.SerializeObject(createRequest(u, p));
-				
-				WebSocket w = wsController.getWs();
-				// пытаемся отправить сообщение об авторизации
+
+                //WebSocket w = wsController.getWs();
+
+                // пытаемся отправить сообщение об авторизации
+                caller.send(jsonReq);
+                /*
 				if (w != null && w.IsAlive)
 				{
 					l.log("sending auth request");
 					w.Send(jsonReq);
 				}
+                
 				// если не получается, то 
 				else
 				{
@@ -151,8 +181,9 @@ namespace ChatClient
 					t.IsBackground = true;
 					t.Start();
 				}
-			}
-			else
+                */
+            }
+            else
 			{
 				string u = UserBox.Text;
 				if (u == "test1")
