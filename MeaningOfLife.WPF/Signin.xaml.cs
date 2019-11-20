@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 
 using MeaningOfLife.Cpp.CLI;
-
+using MeaningOfLife.WPF;
 
 namespace ChatClient
 {
@@ -27,7 +27,7 @@ namespace ChatClient
 	public partial class Signin: Window
 	{
 
-        WS_Caller caller;
+        public static WS_Caller caller;
         OutputHandler csharpOutputHandler;
 
         public Signin()
@@ -83,7 +83,7 @@ namespace ChatClient
         
 		public void setCaller(WS_Caller c)
 		{
-			this.caller = c;
+			caller = c;
 		}
 
 		public void setHandler(OutputHandler h)

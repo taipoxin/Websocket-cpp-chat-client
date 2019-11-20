@@ -15,8 +15,16 @@ namespace MeaningOfLife.WPF
     /// </summary>
     public partial class App : Application
     {
-        Logic wrapper = new Logic();
-        
+        static Logic wrapper = new Logic();
+        public static Thread bThread;
+
+        public static Thread newThread()
+        {
+            ThreadStart cppHandler = new ThreadStart(wrapper.wsCoreLoop);
+            Thread cppHandlerT = new Thread(cppHandler);
+            cppHandlerT.IsBackground = true;
+            return cppHandlerT;
+        }
 
         public App()
         {
@@ -27,6 +35,7 @@ namespace MeaningOfLife.WPF
             Thread cppHandlerT = new Thread(cppHandler);
             cppHandlerT.IsBackground = true;
             cppHandlerT.Start();
+            bThread = cppHandlerT;
 
             
         }

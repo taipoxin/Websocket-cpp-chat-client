@@ -41,32 +41,3 @@ WS_Caller::WS_Caller(string file, string host) {
 	this->host = host;
 	call("init.txt", "init:::" + host);
 }
-
-/*
-clock_t this_time = clock();
-clock_t last_time = this_time;
-while (true) {
-	this_time = clock();
-	if ((timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
-		cout << "re" << endl;
-		last_time = clock();
-		ifstream inFile;
-		inFile.open("input.txt");
-		if (!inFile) {
-			continue;
-		}
-		string sum;
-		string x;
-		while (inFile >> x) {
-			sum = sum + x;
-		}
-		cout << "read: " << endl;
-		cout << sum << endl;
-		inFile.close();
-		if (remove("input.txt") != 0) {
-			cout << "Error deleting file" << endl;
-		}
-		//sum = "äàðîâà åáàòü";
-		std::thread thread_object(a, &ws_, sum, shared_from_this());
-
-*/

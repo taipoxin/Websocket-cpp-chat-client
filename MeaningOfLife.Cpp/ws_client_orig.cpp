@@ -19,7 +19,7 @@ void connection_metadata::on_open(client * c, websocketpp::connection_hdl hdl) {
 	m_status = "Open";
 	client::connection_ptr con = c->get_con_from_hdl(hdl);
 	m_server = con->get_response_header("Server");
-	cout << "End opened" << endl;
+	cout << "Opened successfully" << endl;
 }
 
 void connection_metadata::on_fail(client * c, websocketpp::connection_hdl hdl) {
@@ -112,7 +112,7 @@ int websocket_endpoint::connect(std::string const & uri) {
 
 	client::connection_ptr con = m_endpoint.get_connection(uri, ec);
 
-
+	cout << "here" << endl;
 	if (ec) {
 		std::cout << "> Connect initialization error: " << ec.message() << std::endl;
 		return -1;
@@ -148,8 +148,14 @@ int websocket_endpoint::connect(std::string const & uri) {
 		websocketpp::lib::placeholders::_2
 	));
 
-
-	m_endpoint.connect(con);
+	try {
+		m_endpoint.connect(con);
+	}
+	catch (std::exception const& e)
+	{
+		std::cerr << "Error is : " << e.what() << std::endl;
+		cout << "error:" << e.what() << endl;
+	}
 
 	return new_id;
 }

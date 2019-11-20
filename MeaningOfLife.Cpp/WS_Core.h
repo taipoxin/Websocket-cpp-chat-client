@@ -25,6 +25,7 @@ namespace MeaningOfLife
 			string host;
 			int connectWS(double timeoutS);
 			void send(string message);
+			void reconnect();
 			void close();
 			bool isAlive();
 			std::vector<std::string> getMessages();

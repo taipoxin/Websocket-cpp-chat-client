@@ -37,8 +37,8 @@ void processFile(string file, std::vector<std::string>* vector) {
 	cout << "data: " << body << endl;
 	vector->push_back(command);
 	vector->push_back(body);
-	cout << vector->at(0) << endl;
-	cout << vector->at(1) << endl;
+	//cout << vector->at(0) << endl;
+	//cout << vector->at(1) << endl;
 	inFile.close();
 	if (remove(file.c_str()) != 0) {
 		cout << "Error deleting file" << endl;
@@ -48,7 +48,7 @@ void processFile(string file, std::vector<std::string>* vector) {
 
 void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 	string host = "ws://echo.websocket.org";
-	double repeat = 1;
+	double repeat = 0.5;
 
 	try {
 		cout << "Thread start" << endl;
@@ -63,11 +63,15 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 				cout << ".";
 				last_time = clock();
 				if (core == nullptr) {
+					cout << "try to init: " << endl;
 					processFile("init.txt", &vec);
 					if (vec.size() == 0)
 						continue;
 					string body = vec.at(1);
 					core = new WS_Core(body);
+					if (core == nullptr) {
+						cout << "not connected" << endl;
+					}
 					vec.clear();
 				}
 				processFile("input.txt", &vec);
@@ -79,7 +83,18 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 				// TODO: here write command call
 				SWITCH (command) {
 					CASE("init") :
-						core = new WS_Core(body);
+						try {
+							core = new WS_Core(body);
+						}
+						catch (std::exception const& e)
+						{
+							std::cerr << "Error is : " << e.what() << std::endl;
+							cout << "error:" << e.what() << endl;
+						}
+						cout << "shit" << endl;
+						if (core == nullptr) {
+							cout << "shit" << endl;
+						}
 					break;	
 					CASE("connect") :
 						core->connectWS(stod(body));
@@ -99,8 +114,8 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 	}
 	catch (std::exception const& e)
 	{
-		std::cerr << "Error: " << e.what() << std::endl;
-		cout <<e.what();
+		std::cerr << "Error is : " << e.what() << std::endl;
+		cout << "error:" <<e.what() <<endl;
 	}
 }
 

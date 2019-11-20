@@ -10,7 +10,9 @@ using Newtonsoft.Json.Linq;
 using System.Windows.Threading;
 
 using ChatClient;
-
+using System.Diagnostics;
+using MeaningOfLife.WPF;
+using MeaningOfLife.Cpp.CLI;
 
 namespace ChatClient
 {
@@ -43,20 +45,47 @@ namespace ChatClient
         {
             this.file = file;
         }
+
+
+
         public void handle()
         {
+            bool connected = false;
+
+            DateTime startTime, endTime;
+            startTime = DateTime.Now;
+
             while (true)
             {
                 if (File.Exists(this.file))
                 {
+                    connected = true;
                     string jsonStr = System.IO.File.ReadAllText(this.file);
+                    if (jsonStr == "connected")
+                    {
+                        File.Delete(this.file);
+                        Console.WriteLine("Successfully connected to server!");
+                        return;
+                    }
                     var resp = JsonConvert.DeserializeObject<dynamic>(jsonStr);
                     Console.WriteLine("FROM OUTPUT: ");
                     Console.Write(resp);
                     File.Delete(this.file);
                     callForm(resp);
                 }
-                Thread.Sleep(1000);
+                endTime = DateTime.Now;
+
+                Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
+                // прошло 10 сек без коннекта
+                if (!connected && elapsedMillisecs > 10000)
+                {
+                    App.bThread.Abort();
+                    App.bThread = App.newThread();
+                    App.bThread.Start();
+                    Signin.caller = new WS_Caller("input.txt", "ws://localhost:443");
+                    startTime = DateTime.Now;
+                }
+                Thread.Sleep(500);
             }
         }
 
