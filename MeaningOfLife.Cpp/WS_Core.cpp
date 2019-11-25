@@ -74,10 +74,11 @@ WS_Core::WS_Core(string host) {
 	this->id = connectWS(10);
 	
 	if (!isAlive()) {
+		cout << logTitle << "reconnect inited";
 		reconnect();
 	}
 	cout << id;
-	cout << "id set: " << id << endl;
+	cout << logTitle <<"id set: " << id << endl;
 	// Return good connect output to UI
 	ofstream writer;
 	writer.open("output.txt");

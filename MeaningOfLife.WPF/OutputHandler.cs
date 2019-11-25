@@ -20,9 +20,10 @@ namespace ChatClient
     {
         private FileLogger l = new FileLogger(Config.logFileName);
 
-        private Signin signinWindow;
-        private Signup signupWindow;
-        private ChatClient.MainWindow mainWindow;
+        private string logTitle = "C# OutputHandler: ";
+        public Signin signinWindow;
+        public Signup signupWindow;
+        public ChatClient.MainWindow mainWindow;
 
         public void setSigninWindow(Signin w)
         {
@@ -57,15 +58,30 @@ namespace ChatClient
 
             while (true)
             {
+                Console.Write("#");
+                //Console.WriteLine("this.file: " + this.file);
                 if (File.Exists(this.file))
                 {
-                    connected = true;
-                    string jsonStr = System.IO.File.ReadAllText(this.file);
+                    
+                    string jsonStr = "";
+                    while (jsonStr == "") 
+                    {
+                        try
+                        {
+                            jsonStr = System.IO.File.ReadAllText(this.file);
+                        }
+                        catch (IOException e)
+                        {
+                            Console.WriteLine(e);
+                        }
+                    }
+                    Console.WriteLine(jsonStr);
                     if (jsonStr == "connected")
                     {
+                        connected = true;
                         File.Delete(this.file);
-                        Console.WriteLine("Successfully connected to server!");
-                        return;
+                        Console.WriteLine(logTitle + "Successfully connected to server!");
+                        continue;
                     }
                     var resp = JsonConvert.DeserializeObject<dynamic>(jsonStr);
                     Console.WriteLine("FROM OUTPUT: ");
@@ -77,8 +93,9 @@ namespace ChatClient
 
                 Double elapsedMillisecs = ((TimeSpan)(endTime - startTime)).TotalMilliseconds;
                 // прошло 10 сек без коннекта
-                if (!connected && elapsedMillisecs > 10000)
+                if (!connected && elapsedMillisecs > 15000)
                 {
+                    Console.WriteLine(logTitle + "Reload Ws_Caller");
                     App.bThread.Abort();
                     App.bThread = App.newThread();
                     App.bThread.Start();

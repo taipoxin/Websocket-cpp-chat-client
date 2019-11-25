@@ -41,6 +41,7 @@ string MessageHandler::castType(string type) {
 void MessageHandler::handle(string message) {
 	try {
 		auto j = json::parse(message);
+		cout << "handle: new message: " << message << endl;
 		if (j.find("type") != j.end()) {
 			string type = j["type"];
 			type = castType(type);
@@ -72,6 +73,7 @@ void MessageHandler::handle(string message) {
 		ofstream writer;
 		writer.open(this->file);
 		writer << message;	
+		writer.flush();
 	}
 	catch (std::exception const& e)
 	{

@@ -108,30 +108,46 @@ namespace ChatClient
 
 		private void openSigninWindow()
 		{
-			Signin w = new Signin();
+            Signin w = csharpOutputHandler.signinWindow;
 			w.SetWindowPositions(this.Left, this.Top);
 			// показываем новое окно
 			w.Show();
             w.setCaller(caller);
             w.setHandler(csharpOutputHandler);
-            csharpOutputHandler.setSigninWindow(w);
-
+  
             // закрываем текущее окно логина
-            var window = Application.Current.Windows[0];
-			if (window != null)
-				window.Close();
+            this.Visibility = Visibility.Hidden;
+
 		}
 
 		// Cancel
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			openSigninWindow();
-
 		}
 
+        void on_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Closing called");
+            try
+            {
+                if (csharpOutputHandler != null)
+                {
+                    if (csharpOutputHandler.signinWindow != null)
+                        csharpOutputHandler.signinWindow.Close();
+                    if (csharpOutputHandler.mainWindow != null)
+                        csharpOutputHandler.mainWindow.Close();
+                }
+            }
+            catch (InvalidOperationException)
+            {
 
-		// Sign up
-		private void Button_Click_1(object sender, RoutedEventArgs e)
+            }
+        }
+
+
+        // Sign up
+        private void Button_Click_1(object sender, RoutedEventArgs e)
 		{
 
 			bool res = registerFromForm();

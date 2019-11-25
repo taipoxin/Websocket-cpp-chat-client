@@ -112,7 +112,7 @@ int websocket_endpoint::connect(std::string const & uri) {
 
 	client::connection_ptr con = m_endpoint.get_connection(uri, ec);
 
-	cout << "here" << endl;
+	//cout << "here" << endl;
 	if (ec) {
 		std::cout << "> Connect initialization error: " << ec.message() << std::endl;
 		return -1;

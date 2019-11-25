@@ -17,7 +17,6 @@ using System.Windows.Shapes;
 using Newtonsoft.Json;
 
 using MeaningOfLife.Cpp.CLI;
-using MeaningOfLife.WPF;
 
 namespace ChatClient
 {
@@ -35,8 +34,14 @@ namespace ChatClient
 			InitializeComponent();
             //caller = new WS_Caller("input.txt", "ws://echo.websocket.org");
             caller = new WS_Caller("input.txt", "ws://localhost:443");
+
+            MainWindow mw = new MainWindow();
+            Signup sw = new Signup();
             csharpOutputHandler = new OutputHandler("output.txt");
             csharpOutputHandler.setSigninWindow(this);
+            csharpOutputHandler.setMainWindow(mw);
+            csharpOutputHandler.setSignupWindow(sw);
+
             // C++ => C#
             ThreadStart csharpHandler = new ThreadStart(csharpOutputHandler.handle);
             Thread csharpHandlerT = new Thread(csharpHandler);
@@ -90,10 +95,29 @@ namespace ChatClient
 		{
 			this.csharpOutputHandler = h;
 		}
-        
+
+        void on_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Closing called");
+            try
+            {
+                if (csharpOutputHandler != null)
+                {
+                    if (csharpOutputHandler.signupWindow != null)
+                        csharpOutputHandler.signupWindow.Close();
+                    if (csharpOutputHandler.mainWindow != null)
+                        csharpOutputHandler.mainWindow.Close();
+                }
+            }
+            catch(InvalidOperationException)
+            {
+
+            }
+        }
 
 
-		public void dispatchOpenMainWindow()
+
+        public void dispatchOpenMainWindow()
 		{
 			Dispatcher.BeginInvoke(new ThreadStart(delegate
 			{
@@ -104,33 +128,23 @@ namespace ChatClient
 
 		public void openMainWindow()
 		{
-			MainWindow w = new MainWindow();
+            MainWindow w = csharpOutputHandler.mainWindow;
 			w.setCaller(caller);
 			w.setHandler(csharpOutputHandler);
-            csharpOutputHandler.setMainWindow(w);
-
 
             w.Show();
+            this.Visibility = Visibility.Hidden;
 
-			var window = Application.Current.Windows[0];
-			if (window != null)
-			{
-				window.Close();
-			}
 		}
 
 		private void openSignUpWindow()
 		{
-			Signup w = new Signup();
-			w.SetWindowPositions(this.Left, this.Top);
+            Signup w = csharpOutputHandler.signupWindow;
+            w.SetWindowPositions(this.Left, this.Top);
             w.setCaller(caller);
             w.setHandler(csharpOutputHandler);
-            csharpOutputHandler.setSignupWindow(w);
             w.Show();
-
-			var window = Application.Current.Windows[0];
-			if (window != null)
-				window.Close();
+            this.Visibility = Visibility.Hidden;
 		}
 
 		private Entities.AuthRequest createRequest(string user, string password)

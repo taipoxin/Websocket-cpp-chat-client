@@ -23,6 +23,7 @@ namespace MeaningOfLife
 			int id;
 			websocket_endpoint endpoint;
 			string host;
+			string logTitle = "WS_Core: ";
 			int connectWS(double timeoutS);
 			void send(string message);
 			void reconnect();

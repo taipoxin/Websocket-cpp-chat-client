@@ -258,8 +258,6 @@ namespace ChatClient
 		
 
 
-	
-
 		// запрос на получение онлайн пользователей
 		private void Ellipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
@@ -360,7 +358,26 @@ namespace ChatClient
 			}
 		}
 
-		private void closeChannelUsersGrid()
+        void on_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Console.WriteLine("Closing called");
+            try
+            {
+                if (csharpOutputHandler != null)
+                {
+                    if (csharpOutputHandler.signupWindow != null)
+                        csharpOutputHandler.signupWindow.Close();
+                    if (csharpOutputHandler.signinWindow != null)
+                        csharpOutputHandler.signinWindow.Close();
+                }
+            }
+            catch (InvalidOperationException)
+            {
+
+            }
+        }
+
+        private void closeChannelUsersGrid()
 		{
 			GetChannelUsers.Visibility = Visibility.Hidden;
 			UserActionResponseLabel.Visibility = Visibility.Hidden;

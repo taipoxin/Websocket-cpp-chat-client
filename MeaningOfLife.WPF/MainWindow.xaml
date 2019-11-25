@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
+        Closing="on_Closing"
         Title="Main" Width="1280" Height="720" MinWidth="750" MinHeight="520" Loaded="Window_Loaded">
     <Window.Resources>
         <!-- Предложение ввода текста в TextBox -->
