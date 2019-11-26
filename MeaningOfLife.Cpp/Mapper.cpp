@@ -620,3 +620,147 @@ int stTest()
 
 	return 0;
 }
+
+#include<iostream>
+#include<algorithm>         
+using namespace std;
+
+void swap(char *x, char *y)  /*Method to swap two digits*/
+{
+	char temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+void nextNum(char num[], int size)  /*Method to find the next number greater than the given number*/
+{
+	int i, j;
+	for (i = size - 1; i > 0; i--)
+	{
+		if (num[i - 1] < num[i])
+			break;
+	}
+
+	if (i == 0)            /*if all the digits are in decreasing order then the given number the greatest*/
+	{
+		cout << "No number greater than this is possible from the same set of digits";
+		return;
+	}
+	int x = num[i - 1], smaller = i;
+	for (j = i + 1; j < size; j++)
+	{
+		if (num[j] > x && num[j] < num[smaller])  /*to find out the next greatest digit after x in num*/
+		{
+			smaller = j;
+		}
+	}
+	swap(&num[smaller], &num[i - 1]);    /*Method to swap two digits*/
+	sort(num + i, num + size);            /*sort is a predefined method in algorithm */
+	for (int i = 0; i < size; i++)
+	{
+		cout << num[i];
+	}
+	return;
+}
+
+int digitsSwap()
+{
+	int n;
+	cout << "Enter the size of the number :";
+	cin >> n;
+	char number[10];
+	cout << "Enter the number :";
+	for (int i = 0; i < 10; i++)
+	{
+		cin >> number[i];
+	}
+	nextNum(number, 10);
+	return 0;
+}
+
+#include <queue>
+
+using namespace std;
+
+// tree node is defined
+class tree {
+public:
+	int data;
+	tree *left;
+	tree *right;
+};
+
+//convert to sum tree
+int toSumTree(tree *node) {
+	if (!node) //base case 
+		return 0;
+
+	//store old value
+	int temp = node->data;
+
+	//update to new value
+	node->data = toSumTree(node->left) + toSumTree(node->right);
+
+	//return for upper level sums
+	return node->data + temp;
+}
+
+
+//printing the tree using level order traversal
+void printTree(tree* root) {
+	queue<tree*> q;  // using stl
+	tree* temp;
+	q.push(root);
+	q.push(NULL);
+	cout << "root\n";
+	while (!q.empty()) {
+		temp = q.front();
+		q.pop();
+		if (temp == NULL) {
+			if (!q.empty()) {
+				cout << "\nnext level\n";
+				q.push(NULL);
+			}
+		}
+		else {
+			cout << temp->data << " ";  //print node
+			if (temp->left)
+				q.push(temp->left); //EnQueue
+			if (temp->right)
+				q.push(temp->right); //EnQueue
+		}
+	}
+}
+
+// creating new node
+tree* newnode(int data)
+{
+	tree* node = (tree*)malloc(sizeof(tree));
+	node->data = data;
+	node->left = NULL;
+	node->right = NULL;
+	return(node);
+}
+
+
+int treeTest()
+{
+	//**same tree is builted as shown in example**
+	cout << "same tree is built as shown in example\n";
+	tree *root = newnode(10);
+	root->left = newnode(-2);
+	root->right = newnode(8);
+	root->right->right = newnode(5);
+	root->right->left = newnode(-7);
+	root->left->left = newnode(6);
+	root->left->right = newnode(-5);
+
+	cout << "printing the original tree...\n";
+	printTree(root);
+
+	toSumTree(root);
+	cout << "\nprinting the converted tree...\n";
+	printTree(root);
+
+	return 0;
+}
