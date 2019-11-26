@@ -1,4 +1,5 @@
 #include "ws_client_orig.h"
+#include "CastCoreUtils.h"
 
 
 using namespace std;
@@ -179,13 +180,15 @@ void websocket_endpoint::close(int id, websocketpp::close::status::value code, s
 void websocket_endpoint::send(int id, std::string message) {
 	websocketpp::lib::error_code ec;
 	std::cout << "> Send: " << message << endl;
+	string base64_message = base64_encode(message);
+	cout << "base64 send: " << base64_message << endl;
 	con_list::iterator metadata_it = m_connection_list.find(id);
 	if (metadata_it == m_connection_list.end()) {
 		std::cout << "> No connection found with id " << id << std::endl;
 		return;
 	}
 
-	m_endpoint.send(metadata_it->second->get_hdl(), message, websocketpp::frame::opcode::binary, ec);
+	m_endpoint.send(metadata_it->second->get_hdl(), base64_message, websocketpp::frame::opcode::binary, ec);
 	if (ec) {
 		std::cout << "> Error sending message: " << ec.message() << std::endl;
 		return;

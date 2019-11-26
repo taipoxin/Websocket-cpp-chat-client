@@ -30,6 +30,8 @@ namespace MeaningOfLife
 			static void sendGetChannelUsersRequest(string channel, WsController c);
 
 
+
+
 			/// <summary>
 			/// we retrieve long time from server and view it in message grids
 			/// </summary>
