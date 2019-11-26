@@ -87,6 +87,7 @@
     <ClCompile Include="Entities.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="WsController.cpp" />
