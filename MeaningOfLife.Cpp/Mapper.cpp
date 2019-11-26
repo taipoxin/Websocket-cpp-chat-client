@@ -299,3 +299,324 @@ int multiWallet()
 	}
 	return 0;
 }
+
+
+#include <iostream>
+using namespace std;
+
+#define MAX 10
+
+class student
+{
+private:
+	char  name[30];
+	int   rollNo;
+	int   total;
+	float perc;
+public:
+	//member function to get student's details
+	void getDetails(void);
+	//member function to print student's details
+	void putDetails(void);
+};
+
+//member function definition, outside of the class
+void student::getDetails(void) {
+	cout << "Enter name: ";
+	cin >> name;
+	cout << "Enter roll number: ";
+	cin >> rollNo;
+	cout << "Enter total marks outof 500: ";
+	cin >> total;
+
+	perc = (float)total / 500 * 100;
+}
+
+//member function definition, outside of the class
+void student::putDetails(void) {
+	cout << "Student details:\n";
+	cout << "Name:" << name << ",Roll Number:" << rollNo << ",Total:" << total << ",Percentage:" << perc;
+}
+
+int studentTest()
+{
+	student std[MAX];       //array of objects creation
+	int n, loop;
+
+	cout << "Enter total number of students: ";
+	cin >> n;
+
+	for (loop = 0; loop < n; loop++) {
+		cout << "Enter details of student " << loop + 1 << ":\n";
+		std[loop].getDetails();
+	}
+
+	cout << endl;
+
+	for (loop = 0; loop < n; loop++) {
+		cout << "Details of student " << (loop + 1) << ":\n";
+		std[loop].putDetails();
+	}
+
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+class Time
+{
+private:
+	int hours;
+	int minutes;
+	int seconds;
+
+public:
+	void getTime(void);
+	void putTime(void);
+	void addTime(Time T1, Time T2);
+};
+
+void Time::getTime(void)
+{
+	cout << "Enter time:" << endl;
+	cout << "Hours? ";    cin >> hours;
+	cout << "Minutes? ";  cin >> minutes;
+	cout << "Seconds? ";  cin >> seconds;
+}
+
+void Time::putTime(void)
+{
+	cout << endl;
+	cout << "Time after add: ";
+	cout << hours << ":" << minutes << ":" << seconds << endl;
+}
+
+void Time::addTime(Time T1, Time T2)
+{
+
+	this->seconds = T1.seconds + T2.seconds;
+	this->minutes = T1.minutes + T2.minutes + this->seconds / 60;;
+	this->hours = T1.hours + T2.hours + (this->minutes / 60);
+	this->minutes %= 60;
+	this->seconds %= 60;
+}
+
+
+int testTime()
+{
+	Time T1, T2, T3;
+	T1.getTime();
+	T2.getTime();
+	//add two times
+	T3.addTime(T1, T2);
+	T3.putTime();
+
+	return 0;
+}
+
+using namespace std;
+
+class candidate {
+public:
+	string name;
+	int vote;
+};
+
+void outputElection(candidate* arr) {
+	int total_vote = 0;
+	for (int i = 0; i < 5; i++) {
+		//finding total no of votes
+		total_vote = total_vote + arr[i].vote;
+	}
+
+	cout << "result of the election............." << endl;
+	cout << "name of candidate" << "\t" << "vote received" << "\t" << "percentage" << endl;
+	for (int i = 0; i < 5; i++) {
+		cout << arr[i].name << "\t\t\t";
+		cout << arr[i].vote << "\t\t";
+		cout << (arr[i].vote * 100) / total_vote << "%" << endl;
+	}
+
+	int max = INT_MIN, count = 0;
+	int index[5] = { 0 };
+
+	for (int i = 0; i < 5; i++) {
+		if (arr[i].vote > max) {
+			max = arr[i].vote;
+		}
+	}
+
+	for (int i = 0; i < 5; i++) {
+		if (arr[i].vote == max) {
+			index[count] = i;
+			count++;
+		}
+	}
+
+	if (count == 1)
+		cout << "The winner is " << arr[index[count - 1]].name << endl;
+	else {
+		cout << "There is tie between:" << endl;
+		for (int i = 0; i < count - 1; i++)
+			cout << arr[index[i]].name << ", ";
+		cout << arr[index[count - 1]].name << endl;
+		cout << "all are winner\n";
+	}
+	return;
+}
+
+int testCandidate() {
+	string s;
+	int v;
+	candidate arr[5];
+	cout << "enter candidates last name, there are five candidates\n";
+	for (int i = 0; i < 5; i++) {
+		cout << "enter candidate " << i << " last name\n";
+		cin >> s;
+		arr[i].name = s;
+		cout << "enter no of votes received by candidate " << i << endl;
+		cin >> v;
+		arr[i].vote = v;
+	}
+	outputElection(arr);
+	return 0;
+}
+
+
+#include <iostream>
+using namespace std;
+
+class Number
+{
+	private:
+		int num;
+	public:
+		//constructor
+		Number(){ num=0; };
+		
+		//member function to get input
+		void inputNumber (void)
+		{
+			cout<<"Enter an integer number: ";
+			cin>>num;
+		}
+		//member function to display number 
+		void displayNumber()
+		{
+			cout<<"Num: "<<num<<endl;
+		}
+};
+
+//Main function
+int byPointer()
+{
+	//declaring object to the class number
+	Number N;
+	//input and display number using norn object
+	N.inputNumber();
+	N.displayNumber();
+
+	//declaring pointer to the object 
+	Number *ptrN;
+	ptrN = new Number; //creating & assigning memory 
+	
+	//printing default value
+	cout<<"Default value... "<<endl;
+	//calling member function with pointer 
+	ptrN->displayNumber();
+	
+	//input values and print 
+	ptrN->inputNumber();
+	ptrN->displayNumber();
+
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+// claas declaration
+class point
+{
+private:
+	int X, Y;
+
+public:
+	//defualt constructor 
+	point() { X = 0; Y = 0; }
+
+	//setter function
+	void setPoint(int a, int b)
+	{
+		X = a;
+		Y = b;
+	}
+	//getter functions
+	int getX(void)
+	{
+		return X;
+	}
+	int getY(void)
+	{
+		return Y;
+	}
+
+};
+
+//Main function
+int pointXY()
+{
+	//object 
+	point p1, p2;
+
+	//set points
+	p1.setPoint(5, 10);
+	p2.setPoint(50, 100);
+
+	//get points 
+	cout << "p1: " << p1.getX() << " , " << p1.getY() << endl;
+	cout << "p1: " << p2.getX() << " , " << p2.getY() << endl;
+
+	return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+//structure definition with private and public memebers
+struct Student1
+{
+private:
+	int rNo;
+	float perc;
+public:
+	//function to read details
+	void read(void)
+	{
+		cout << "Enter roll number: ";
+		cin >> rNo;
+		cout << "Enter percentage: ";
+		cin >> perc;
+	}
+	//function to print details
+	void print(void)
+	{
+		cout << endl;
+		cout << "Roll number: " << rNo << endl;
+		cout << "Pecentage: " << perc << "%" << endl;
+	}
+};
+
+//Main code
+int stTest()
+{
+	//declaring structure variable
+	struct Student1 std;
+	//reading and printing student details
+	//by calling public member functions of the structure
+	std.read();
+	std.print();
+
+	return 0;
+}
