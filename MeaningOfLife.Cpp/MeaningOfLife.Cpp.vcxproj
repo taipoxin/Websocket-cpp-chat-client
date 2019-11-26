@@ -70,13 +70,10 @@
   <ItemGroup>
     <ClInclude Include="CastCoreUtils.h" />
     <ClInclude Include="Config.h" />
-    <ClInclude Include="Entities.h" />
     <ClInclude Include="FileLogger.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="MessageHandler.h" />
     <ClInclude Include="str_switch.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="WsController.h" />
     <ClInclude Include="WS_Caller.h" />
     <ClInclude Include="ws_client_orig.h" />
     <ClInclude Include="WS_Core.h" />
@@ -84,13 +81,9 @@
   <ItemGroup>
     <ClCompile Include="CastCoreUtils.cpp" />
     <ClCompile Include="Config.cpp" />
-    <ClCompile Include="Entities.cpp" />
     <ClCompile Include="FileLogger.cpp" />
     <ClCompile Include="Logic.cpp" />
-    <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="MessageHandler.cpp" />
-    <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="WsController.cpp" />
     <ClCompile Include="WS_Caller.cpp" />
     <ClCompile Include="ws_client_orig.cpp" />
     <ClCompile Include="WS_Core.cpp" />
