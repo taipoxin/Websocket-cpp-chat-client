@@ -14,6 +14,7 @@ int WS_Core::connectWS(double timeoutS) {
 		connection_metadata::ptr metadata = endpoint.get_metadata(id);
 		while ((metadata.get()->get_status() != "Open") || (timeoutS * CLOCKS_PER_SEC > (double)(this_time - last_time))) {
 			this_time = clock();
+			std::this_thread::sleep_for(std::chrono::milliseconds(20));
 		}
 		cout << "here";
 		if (timeoutS * CLOCKS_PER_SEC < (double)(this_time - last_time)) {

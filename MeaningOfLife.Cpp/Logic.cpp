@@ -54,61 +54,61 @@ void MeaningOfLife::Cpp::Logic::wsCoreLoop() {
 		cout << "Thread start" << endl;
 		WS_Core* core;
 		core = nullptr;
-		clock_t this_time = clock();
-		clock_t last_time = this_time;
+		//clock_t this_time = clock();
+		//clock_t last_time = this_time;
 		std::vector<std::string> vec;
 		while (true) {
-			this_time = clock();
-			if ((repeat * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
-				cout << ".";
-				last_time = clock();
-				if (core == nullptr) {
-					cout << "try to init: " << endl;
-					processFile("init.txt", &vec);
-					if (vec.size() == 0)
-						continue;
-					string body = vec.at(1);
-					core = new WS_Core(body);
-					if (core == nullptr) {
-						cout << "not connected" << endl;
-					}
-					vec.clear();
-				}
-				processFile("input.txt", &vec);
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			//this_time = clock();
+			//if ((repeat * CLOCKS_PER_SEC < (double)(this_time - last_time))) {
+			//	cout << ".";
+			//	last_time = clock();
+			if (core == nullptr) {
+				cout << "try to init: " << endl;
+				processFile("init.txt", &vec);
 				if (vec.size() == 0)
 					continue;
-				std::string command = vec.at(0);
-				std::string body = vec.at(1);
-				vec.clear();
-				// TODO: here write command call
-				SWITCH (command) {
-					CASE("init") :
-						try {
-							core = new WS_Core(body);
-						}
-						catch (std::exception const& e)
-						{
-							std::cerr << "Error is : " << e.what() << std::endl;
-							cout << "error:" << e.what() << endl;
-						}
-						cout << "shit" << endl;
-						if (core == nullptr) {
-							cout << "shit" << endl;
-						}
-					break;	
-					CASE("connect") :
-						core->connectWS(stod(body));
-					break;
-					CASE("send") :
-						core->send(body);
-					break;
-					CASE("close") :
-						core->close();
-					break;
-					CASE("isalive") :
-						core->isAlive();
-					break;
+				string body = vec.at(1);
+				core = new WS_Core(body);
+				if (core == nullptr) {
+					cout << "not connected" << endl;
 				}
+				vec.clear();
+			}
+			processFile("input.txt", &vec);
+			if (vec.size() == 0)
+				continue;
+			std::string command = vec.at(0);
+			std::string body = vec.at(1);
+			vec.clear();
+			// TODO: here write command call
+			SWITCH (command) {
+				CASE("init") :
+					try {
+						core = new WS_Core(body);
+					}
+					catch (std::exception const& e)
+					{
+						std::cerr << "Error is : " << e.what() << std::endl;
+						cout << "error:" << e.what() << endl;
+					}
+					cout << "shit" << endl;
+					if (core == nullptr) {
+						cout << "shit" << endl;
+					}
+				break;	
+				CASE("connect") :
+					core->connectWS(stod(body));
+				break;
+				CASE("send") :
+					core->send(body);
+				break;
+				CASE("close") :
+					core->close();
+				break;
+				CASE("isalive") :
+					core->isAlive();
+				break;
 			}
 		}
 	}
